@@ -196,10 +196,10 @@ public class GestureRecognizer
 	    if (score < 0.7f)
         {
 		    Debug.Log("NO MATCH " + score );
-		    GestureObserver.GuiText.GetComponent<GUIText>().text = "RESULT: NO MATCH " +  "\n" + "SCORE: " + Mathf.Round(100 * score) +"%";
+		    GestureObserver._textMesh.text = "RESULT: NO MATCH " +  "\n" + "SCORE: " + Mathf.Round(100 * score) +"%";
 	    } else {
 		    Debug.Log("RESULT: " + GestureTemplates.TemplateNames[count] + " SCORE: " + score);
-		    GestureObserver.GuiText.GetComponent<GUIText>().text = "RESULT: " + GestureTemplates.TemplateNames[count] + "\n" + "SCORE: " + Mathf.Round(100 * score) +"%";
+		    GestureObserver._textMesh.text = "RESULT: " + GestureTemplates.TemplateNames[count] + "\n" + "SCORE: " + Mathf.Round(100 * score) +"%";
 	    }
 
     }

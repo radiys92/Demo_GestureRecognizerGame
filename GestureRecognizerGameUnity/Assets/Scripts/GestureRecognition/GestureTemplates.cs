@@ -2,12 +2,12 @@ using UnityEngine;
 using System.Collections;
 
 // all known gesture templates
-public class GestureTemplates
+public static class GestureTemplates
 {
     public static ArrayList Templates;
     public static ArrayList TemplateNames;
 
-    public GestureTemplates ()
+    static GestureTemplates ()
     {
         ArrayList square = new ArrayList(new Vector2[] {new Vector2(-252, 0), new Vector2(-233, -13), new Vector2(-215, -26), new Vector2(-199, -42), new Vector2(-181, -56), new Vector2(-166, -73), new Vector2(-151, -90), new Vector2(-137, -108), new Vector2(-122, -126), new Vector2(-107, -143), new Vector2(-95, -162), new Vector2(-85, -182), new Vector2(-72, -201), new Vector2(-59, -220), new Vector2(-46, -239), new Vector2(-32, -252), new Vector2(-18, -234), new Vector2(-2, -218), new Vector2(15, -202), new Vector2(31, -186), new Vector2(47, -169), new Vector2(63, -154), new Vector2(80, -138), new Vector2(97, -123), new Vector2(114, -108), new Vector2(131, -92), new Vector2(148, -78), new Vector2(166, -64), new Vector2(183, -49), new Vector2(201, -35), new Vector2(218, -19), new Vector2(235, -5), new Vector2(248, 14), new Vector2(241, 32), new Vector2(223, 47), new Vector2(207, 62), new Vector2(191, 79), new Vector2(176, 96), new Vector2(160, 112), new Vector2(146, 130), new Vector2(130, 147), new Vector2(115, 164), new Vector2(100, 181), new Vector2(84, 198), new Vector2(69, 214), new Vector2(54, 231), new Vector2(39, 248), new Vector2(29, 234), new Vector2(15, 216), new Vector2(-1, 200), new Vector2(-18, 185), new Vector2(-35, 170), new Vector2(-52, 154), new Vector2(-69, 139), new Vector2(-86, 124), new Vector2(-102, 108), new Vector2(-119, 93), new Vector2(-136, 78), new Vector2(-153, 62), new Vector2(-170, 47), new Vector2(-186, 31), new Vector2(-203, 16), new Vector2(-221, 3), new Vector2(-233, -10)});
 

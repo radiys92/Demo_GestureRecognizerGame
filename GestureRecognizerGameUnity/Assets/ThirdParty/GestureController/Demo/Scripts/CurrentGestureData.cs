@@ -68,6 +68,6 @@ public class CurrentGestureData : MonoBehaviour
 	/// </summary>
 	void OnGestureEnd (Gesture g)
 	{
-		_text.text = "";
+//		_text.text = "";
 	}
 }

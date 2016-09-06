@@ -49,7 +49,7 @@ public class LineCreator : MonoBehaviour
 	void OnGestureEnd (Gesture g)
 	{
 		// Finish him!
-		_lr.SetVertexCount(0);
-		_vertCount = 0;
+//		_lr.SetVertexCount(0);
+//		_vertCount = 0;
 	}
 }
