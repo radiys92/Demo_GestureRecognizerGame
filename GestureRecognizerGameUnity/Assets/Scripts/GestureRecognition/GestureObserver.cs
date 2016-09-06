@@ -53,39 +53,4 @@ public class GestureObserver : MonoBehaviour
 	    }
     	
     } 
-
-    void OnGUI ()
-    {
-	    if(GestureRecognizer.recordDone == 1)
-        { 
-		    GUI.Window (0, new Rect (350, 220, 300, 100), DoMyWindow, "Save the template?");
-	    }
-    }
-
-    void DoMyWindow (int windowID)
-    {
-        GestureRecognizer.stringToEdit = GUILayout.TextField(GestureRecognizer.stringToEdit);
-
-        if (GUI.Button (new Rect (100,50,50,20), "Save"))
-        {
-            var temp = new ArrayList();
-            var a = (ArrayList)GestureTemplates.Templates[GestureTemplates.Templates.Count - 1];
-
-            for (var i = 0; i < GestureRecognizer.newTemplateArr.Count; i++)
-                temp.Add(GestureRecognizer.newTemplateArr[i]);
-
-            GestureTemplates.Templates.Add(temp);
-            GestureTemplates.TemplateNames.Add(GestureRecognizer.stringToEdit);
-            GestureRecognizer.recordDone = 0;
-            GestureRecognizer.newTemplateArr.Clear();
-
-            _textMesh.text = "TEMPLATE: " + GestureRecognizer.stringToEdit + "\n STATUS: SAVED";
-	    }
-
-	    if (GUI.Button (new Rect (160,50,50,20), "Cancel")) 
-        {
-            GestureRecognizer.recordDone = 0;
-            _textMesh.text = "";
-	    }
-    }
 }
