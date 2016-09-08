@@ -22,6 +22,6 @@ public class GestureObserver : MonoBehaviour
     
     private void OnGestureEnd(Gesture g)
     {
-        GestureRecognizer.startRecognizer(g.Frames.Select(i => i.position).ToList());
+        GestureRecognizer.StartRecognizer(g.Frames.Select(i => i.position).ToList());
     }
 }
