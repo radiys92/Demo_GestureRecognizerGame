@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class GestureRecognizer
 {
@@ -8,76 +10,59 @@ public class GestureRecognizer
     static int sizeOfScaleRect = 500;			// the size of the bounding box
     static int compareDetail = 15;				// Number of matching iterations (CPU consuming) 
     static int angleRange = 45;					// Angle detail level of when matching with templates 
-    public static int recordDone = 0;
-    public static string stringToEdit = "Enter a Template name";
-    public static ArrayList newTemplateArr;
     
-    public static void startRecognizer (ArrayList pointArray)
+    public static void StartRecognizer (List<Vector2> pointArray)
     {
 	    // main recognizer function
-	    pointArray = optimizeGesture(pointArray, maxPoints);
-	    Vector2 center = calcCenterOfGesture(pointArray);
-        Vector2 v = (Vector2)pointArray[0];
-	    float radians = Mathf.Atan2(center.y - v.y, center.x - v.x);
+	    pointArray = OptimizeGesture(pointArray, maxPoints);
+	    var center = CalcCenterOfGesture(pointArray);
+        var v = pointArray[0];
+	    var radians = Mathf.Atan2(center.y - v.y, center.x - v.x);
 	    pointArray = RotateGesture(pointArray, -radians, center);
 	    pointArray = ScaleGesture(pointArray, sizeOfScaleRect);
 	    pointArray = TranslateGestureToOrigin(pointArray);
-	    gestureMatch(pointArray); 
+	    GestureMatch(pointArray); 
     }
 
-    public static void recordTemplate (ArrayList pointArray)
-    {
-	    // record function
-	    pointArray = optimizeGesture(pointArray, maxPoints);
-        Vector2 center = calcCenterOfGesture(pointArray);
-        Vector2 v = (Vector2)pointArray[0];
-	    float radians = Mathf.Atan2(center.y - v.y, center.x - v.x);
-	    pointArray = RotateGesture(pointArray, -radians, center);
-	    pointArray = ScaleGesture(pointArray, sizeOfScaleRect);
-	    pointArray = TranslateGestureToOrigin(pointArray);
-    	
-	    newTemplateArr = new ArrayList ();
-	    newTemplateArr = pointArray;
-
-	    recordDone = 1;
-    }
-
-    static ArrayList optimizeGesture (ArrayList pointArray, int maxPoints)
+    private static List<Vector2> OptimizeGesture (List<Vector2> pointArray, int maxPoints)
     {
 	    // take all the points in the gesture and finds the correct points compared with distance and the maximun value of points
     	
 	    // calc the interval relative the length of the gesture drawn by the user
-	    float interval = calcTotalGestureLength(pointArray) / (maxPoints - 1);
+	    float interval = CalcTotalGestureLength(pointArray) / (maxPoints - 1);
     	
 	    // use the same starting point in the new array from the old one. 
-	    ArrayList optimizedPoints = new ArrayList();
-        optimizedPoints.Add(pointArray[0]);
-    	
-	    float tempDistance = 0.0f;
+        var optimizedPoints = new List<Vector2> {pointArray.ElementAt(0)};
+
+        float tempDistance = 0.0f;
     	
 	    // run through the gesture array. Start at i = 1 because we compare point two with point one)
-	    for (int i = 1; i < pointArray.Count; ++i)
+	    for (int i = 1; i < pointArray.Count(); ++i)
         {
-            float currentDistanceBetween2Points = calcDistance((Vector2)pointArray[i - 1], (Vector2)pointArray[i]);
+
+            var v1 = pointArray[i - 1];
+            var v = pointArray[i];
+            float currentDistanceBetween2Points = Vector2.Distance(v1,v);
     		
 		    if ((tempDistance + currentDistanceBetween2Points) >= interval)
             {
-                Vector2 v1 = (Vector2)pointArray[i - 1];
-                Vector2 v = (Vector2)pointArray[i];
 
 			    // the calc is: old pixel + the differens of old and new pixel multiply  
-			    float newX = v1.x + ((interval - tempDistance) / currentDistanceBetween2Points) * (v.x - v1.x);
-			    float newY = v1.y + ((interval - tempDistance) / currentDistanceBetween2Points) * (v.y - v1.y);
+			    var newX = v1.x + ((interval - tempDistance) / currentDistanceBetween2Points) * (v.x - v1.x);
+			    var newY = v1.y + ((interval - tempDistance) / currentDistanceBetween2Points) * (v.y - v1.y);
     			
 			    // create new point
-			    Vector2 newPoint = new Vector2(newX, newY);
+			    var newPoint = new Vector2(newX, newY);
     			
 			    // set new point into array
 			    optimizedPoints.Add(newPoint);
 
-                ArrayList temp = pointArray.GetRange(i, pointArray.Count - i - 1);
-                Vector2 last = (Vector2)pointArray[pointArray.Count - 1];
-                pointArray.SetRange(i + 1, temp);
+                var temp = pointArray.GetRange(i, pointArray.Count - i - 1);
+                var last = pointArray[pointArray.Count - 1];
+                for (var j = 0; j < temp.Count; j++)
+                {
+                    pointArray[i + 1 + j] = temp[j];
+                }
                 pointArray.Add(last);
                 //pointArray.InsertRange(i + 1, temp);
 			    pointArray.Insert(i, newPoint);
@@ -94,7 +79,7 @@ public class GestureRecognizer
 	    // Rounding-errors might happens. Just to check if all the points are in the new array
 	    if (optimizedPoints.Count == maxPoints - 1) 
         {
-            Vector2 v = (Vector2)pointArray[pointArray.Count - 1];
+            var v = pointArray[pointArray.Count - 1];
 		    optimizedPoints.Add(new Vector2(v.x, v.y));
 	    }
 
@@ -102,83 +87,54 @@ public class GestureRecognizer
     }
 
 
-    static ArrayList RotateGesture(ArrayList pointArray, float radians, Vector3 center)  
+    private static List<Vector2> RotateGesture(List<Vector2> pointArray, float radians, Vector3 center)  
     {
 	    // loop through original array, rotate each point and return the new array
-	    ArrayList newArray = new ArrayList();
-	    float cos = Mathf.Cos(radians);
-	    float sin = Mathf.Sin(radians);
-    	
-	    for (int i = 0; i < pointArray.Count; ++i) 
+	    var cos = Mathf.Cos(radians);
+	    var sin = Mathf.Sin(radians);
+
+        return pointArray.Select(v =>
         {
-            Vector2 v = (Vector2)pointArray[i];
-		    float newX = (v.x - center.x) * cos - (v.y - center.y) * sin + center.x;
-		    float newY = (v.x - center.x) * sin + (v.y - center.y) * cos + center.y;
-		    newArray.Add(new Vector2(newX, newY));
-	    }
-	    return newArray;
+            var newX = (v.x - center.x)*cos - (v.y - center.y)*sin + center.x;
+            var newY = (v.x - center.x)*sin + (v.y - center.y)*cos + center.y;
+            return new Vector2(newX, newY);
+        }).ToList();
     }
 
-    static ArrayList ScaleGesture(ArrayList pointArray, int size)
+    private static List<Vector2> ScaleGesture(List<Vector2> pointArray, int size)
     {
 	    // equal min and max to the opposite infinity, such that every gesture size can fit the bounding box.
-	    float minX = Mathf.Infinity;
-	    float maxX = Mathf.NegativeInfinity; 
-	    float minY = Mathf.Infinity;
-	    float maxY = Mathf.NegativeInfinity;
-    	
-	    // loop through array. Find the minimum and maximun values of x and y to be able to create the box
-        foreach (Vector2 v in pointArray)
-        {
-		    if (v.x < minX) minX = v.x;
-		    if (v.x > maxX) maxX = v.x;
-		    if (v.y < minY) minY = v.y;
-		    if (v.y > maxY) maxY = v.y;
-	    }
-    	
-	    // create a rectangle surronding the gesture as a bounding box.
-	    Rect BoundingBox = new Rect(minX, minY, maxX - minX, maxY - minY);
-	    ArrayList newArray = new ArrayList();
+	    var minX = pointArray.Min(i=>i.x);
+	    var maxX = pointArray.Max(i=>i.x); 
+	    var minY = pointArray.Min(i=>i.y);
+	    var maxY = pointArray.Max(i=>i.y);
 
-        foreach (Vector2 v in pointArray)
-        {
-		    float newX = v.x * (size / BoundingBox.width);
-		    float newY = v.y * (size / BoundingBox.height);
-		    newArray.Add(new Vector2(newX, newY));
-	    }
+        var w = maxX - minX;
+        var h = maxY - minY;
 
-	    return newArray;
+        return pointArray.Select(i => new Vector2(i.x*(size/w), i.y*(size/h))).ToList();
     }
 
 
-    static ArrayList TranslateGestureToOrigin(ArrayList pointArray) 
+    private static List<Vector2> TranslateGestureToOrigin(List<Vector2> pointArray) 
     {
-        Vector2 origin = new Vector2(0,0);
-	    Vector3 center = calcCenterOfGesture(pointArray);
-	    ArrayList newArray = new ArrayList();
-
-        foreach (Vector2 v in pointArray)
-        {
-		    float newX = v.x + origin.x - center.x;
-		    float newY = v.y + origin.y - center.y;
-		    newArray.Add(new Vector2(newX, newY));
-	    }
-
-	    return newArray;
+        var origin = new Vector2(0,0);
+	    var center = CalcCenterOfGesture(pointArray);
+	    return pointArray.Select(v=>new Vector2(v.x + origin.x - center.x,v.y + origin.y - center.y)).ToList();
     }
 
 
     // --------------------------------  		     GESTURE OPTIMIZING DONE   		----------------------------------------------------------------
     // -------------------------------- 		START OF THE MATCHING PROCESS	----------------------------------------------------------------
 
-    static void gestureMatch(ArrayList pointArray) 
+    private static void GestureMatch(List<Vector2> pointArray) 
     {
-	    float tempDistance = Mathf.Infinity;
-	    int count = 0;
+	    var tempDistance = Mathf.Infinity;
+	    var count = 0;
 
-	    for (int i = 0; i < GestureTemplates.Templates.Count; ++i) 
+	    for (var i = 0; i < GestureTemplates.Templates.Count; ++i) 
         {
-		    float distance = calcDistanceAtOptimalAngle(pointArray, (ArrayList)GestureTemplates.Templates[i], -angleRange, angleRange);
+		    var distance = CalcDistanceAtOptimalAngle(pointArray, GestureTemplates.Templates[i], -angleRange, angleRange);
     		
 		    if (distance < tempDistance)	
             {
@@ -187,8 +143,8 @@ public class GestureRecognizer
 		    }
 	    }
 
-	    float HalfDiagonal = 0.5f * Mathf.Sqrt(Mathf.Pow(sizeOfScaleRect, 2) + Mathf.Pow(sizeOfScaleRect, 2));
-	    float score = 1.0f - (tempDistance / HalfDiagonal);
+	    var halfDiagonal = 0.5f * Mathf.Sqrt(Mathf.Pow(sizeOfScaleRect, 2) + Mathf.Pow(sizeOfScaleRect, 2));
+	    var score = 1.0f - (tempDistance / halfDiagonal);
     	
 	    // print the result
     	
@@ -208,14 +164,14 @@ public class GestureRecognizer
     // -------------------------------- 		START OF THE HELP FUNCTIONS		----------------------------------------------------------------
 
 
-    static Vector2 calcCenterOfGesture(ArrayList pointArray)
+    private static Vector2 CalcCenterOfGesture(List<Vector2> pointArray)
     {
 	    // finds the center of the drawn gesture
     	
-	    float averageX = 0.0f;
-	    float averageY = 0.0f;
+	    var averageX = 0.0f;
+	    var averageY = 0.0f;
     	
-        foreach (Vector2 v in pointArray)
+        foreach (var v in pointArray)
         {
 		    averageX += v.x;
 		    averageY += v.y;
@@ -225,42 +181,35 @@ public class GestureRecognizer
 	    averageY = averageY / pointArray.Count;
     	
 	    return new Vector2(averageX, averageY);
-    }	
-
-    static float calcDistance(Vector2 point1, Vector2 point2)
-    {
-	    // distance between two vector points.
-	    float dx = point2.x - point1.x;
-	    float dy = point2.y - point1.y;
-    	
-	    return Mathf.Sqrt(dx * dx + dy * dy);
     }
 
-    static float calcTotalGestureLength(ArrayList pointArray)
+    private static float CalcTotalGestureLength(List<Vector2> pointArray)
     { 
 	    // total length of gesture path
-	    float length = 0.0f;
-	    for (int i = 1; i < pointArray.Count; ++i)
-        {
-            length += calcDistance((Vector2)pointArray[i - 1], (Vector2)pointArray[i]);
+	    var length = 0.0f;
+	    for (var i = 1; i < pointArray.Count(); ++i)
+	    {
+	        var a = pointArray[i - 1];
+	        var b = pointArray[i];
+            length += Vector2.Distance(a,b);
 	    }
 
 	    return length;
     }
 
 
-    static float calcDistanceAtOptimalAngle(ArrayList pointArray, ArrayList T, float negativeAngle, float positiveAngle) {
+    private static float CalcDistanceAtOptimalAngle(List<Vector2> pointArray, List<Vector2> template, float negativeAngle, float positiveAngle) {
 	    // Create two temporary distances. Compare while running through the angles. 
 	    // Each time a lower distace between points and template points are foound store it in one of the temporary variables. 
     	
-	    float radian1 = Mathf.PI * negativeAngle + (1.0f - Mathf.PI ) * positiveAngle;
-	    float tempDistance1 = calcDistanceAtAngle(pointArray, T, radian1);
+	    var radian1 = Mathf.PI * negativeAngle + (1.0f - Mathf.PI ) * positiveAngle;
+	    var tempDistance1 = CalcDistanceAtAngle(pointArray, template, radian1);
     	
-	    float radian2 = (1.0f - Mathf.PI ) * negativeAngle + Mathf.PI  * positiveAngle;
-	    float tempDistance2 = calcDistanceAtAngle(pointArray, T, radian2);
+	    var radian2 = (1.0f - Mathf.PI ) * negativeAngle + Mathf.PI  * positiveAngle;
+	    var tempDistance2 = CalcDistanceAtAngle(pointArray, template, radian2);
     	
 	    // the higher the number compareDetail is, the better recognition this system will perform. 
-	    for (int i = 0; i < compareDetail; ++i)
+	    for (var i = 0; i < compareDetail; ++i)
         {
 		    if (tempDistance1 < tempDistance2)
             {
@@ -268,7 +217,7 @@ public class GestureRecognizer
 			    radian2 = radian1;
 			    tempDistance2 = tempDistance1;
 			    radian1 = Mathf.PI * negativeAngle + (1.0f - Mathf.PI) * positiveAngle;
-			    tempDistance1 = calcDistanceAtAngle(pointArray, T, radian1);
+			    tempDistance1 = CalcDistanceAtAngle(pointArray, template, radian1);
 		    } 
             else 
             {
@@ -276,33 +225,27 @@ public class GestureRecognizer
 			    radian1 = radian2;
 			    tempDistance1 = tempDistance2;
 			    radian2 = (1.0f - Mathf.PI) * negativeAngle + Mathf.PI * positiveAngle;
-			    tempDistance2 = calcDistanceAtAngle(pointArray, T, radian2);
+			    tempDistance2 = CalcDistanceAtAngle(pointArray, template, radian2);
 		    }
 	    }
 
 	    return Mathf.Min(tempDistance1, tempDistance2);
     }
 
-    static float calcDistanceAtAngle(ArrayList pointArray, ArrayList T, float radians) 
+    private static float CalcDistanceAtAngle(List<Vector2> pointArray, List<Vector2> template, float radians) 
     {
 	    // calc the distance of template and user gesture at 
-	    Vector2 center = calcCenterOfGesture(pointArray);
-	    ArrayList newpoints = RotateGesture(pointArray, radians, center);
+	    var center = CalcCenterOfGesture(pointArray);
+	    var newpoints = RotateGesture(pointArray, radians, center);
 
-	    return calcGestureTemplateDistance(newpoints, T);
-    }	
+	    return CalcGestureTemplateDistance(newpoints, template);
+    }
 
-    static float calcGestureTemplateDistance(ArrayList newRotatedPoints, ArrayList templatePoints) 
+    private static float CalcGestureTemplateDistance(List<Vector2> newRotatedPoints, List<Vector2> templatePoints) 
     {
 	    // calc the distance between gesture path from user and the template gesture
-	    float distance = 0.0f;
+	    var distance = newRotatedPoints.Select((t, i) => Vector2.Distance(t, templatePoints[i])).Sum();
 
-        // assumes newRotatedPoints.length == templatePoints.length
-	    for (int i = 0; i < newRotatedPoints.Count; ++i)
-        {
-            distance += calcDistance((Vector2)newRotatedPoints[i], (Vector2)templatePoints[i]);
-	    }
-
-	    return distance / newRotatedPoints.Count;
+        return distance / newRotatedPoints.Count;
     }
 }
