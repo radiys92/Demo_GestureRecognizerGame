@@ -46,7 +46,6 @@ public class GameController : MonoBehaviour
     {
         if (state == States.line1)
             ClearLines();
-        _gestures.Clear();
 
         _lr = CreateLine();
         _lines.Add(_lr);
@@ -88,7 +87,39 @@ public class GameController : MonoBehaviour
                 statusBar.text = "Draw line 2";
                 break;
             case States.line2:
-                statusBar.text = "Finished!";
+                statusBar.text = "Finished!\n";
+
+                var score = GestureRecognizer.Compare(_gestures[0], _gestures[1], 64);
+                statusBar.text += string.Format(" Comparation score = {0}, points = {2}. {1} result.\n",
+                    score,
+                    score < .7f
+                        ? "Bad"
+                        : score < 0.9f
+                            ? "Good"
+                            : "Best",
+                    64);
+
+                score = GestureRecognizer.Compare(_gestures[0], _gestures[1], 256);
+                statusBar.text += string.Format(" Comparation score = {0}, points = {2}. {1} result.\n",
+                    score,
+                    score < .7f
+                        ? "Bad"
+                        : score < 0.9f
+                            ? "Good"
+                            : "Best",
+                    256);
+
+                score = GestureRecognizer.Compare(_gestures[0], _gestures[1], 1024);
+                statusBar.text += string.Format(" Comparation score = {0}, points = {2}. {1} result.\n",
+                    score,
+                    score < .7f
+                        ? "Bad"
+                        : score < 0.9f
+                            ? "Good"
+                            : "Best",
+                    1024);
+
+                _gestures.Clear();
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

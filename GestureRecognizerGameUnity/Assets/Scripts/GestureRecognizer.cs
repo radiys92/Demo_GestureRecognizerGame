@@ -2,26 +2,36 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GCon;
 
 public class GestureRecognizer
 {
     // recognizer settings
-    static int maxPoints = 64;					// max number of point in the gesture
     static int sizeOfScaleRect = 500;			// the size of the bounding box
     static int compareDetail = 15;				// Number of matching iterations (CPU consuming) 
     static int angleRange = 45;					// Angle detail level of when matching with templates 
     
-    public static void StartRecognizer (List<Vector2> pointArray)
+    public static float Compare(Gesture a, Gesture b, int maxPoints)
     {
-	    // main recognizer function
-	    pointArray = OptimizeGesture(pointArray, maxPoints);
-	    var center = CalcCenterOfGesture(pointArray);
-        var v = pointArray[0];
-	    var radians = Mathf.Atan2(center.y - v.y, center.x - v.x);
-	    pointArray = RotateGesture(pointArray, -radians, center);
-	    pointArray = ScaleGesture(pointArray, sizeOfScaleRect);
-	    pointArray = TranslateGestureToOrigin(pointArray);
-	    GestureMatch(pointArray); 
+        var p1 = a.Frames.Select(i => i.position).ToList();
+        var p2 = b.Frames.Select(i => i.position).ToList();
+
+        p1 = NormalizePoints(p1, maxPoints);
+        p2 = NormalizePoints(p2, maxPoints);
+
+        return GestureMatch(p1,p2); 
+    }
+
+    private static List<Vector2> NormalizePoints(List<Vector2> points, int maxPoints)
+    {
+        points = OptimizeGesture(points, maxPoints);
+        var center = CalcCenterOfGesture(points);
+        var v = points[0];
+        var radians = Mathf.Atan2(center.y - v.y, center.x - v.x);
+        points = RotateGesture(points, -radians, center);
+        points = ScaleGesture(points, sizeOfScaleRect);
+        points = TranslateGestureToOrigin(points);
+        return points;
     }
 
     private static List<Vector2> OptimizeGesture (List<Vector2> pointArray, int maxPoints)
@@ -127,36 +137,21 @@ public class GestureRecognizer
     // --------------------------------  		     GESTURE OPTIMIZING DONE   		----------------------------------------------------------------
     // -------------------------------- 		START OF THE MATCHING PROCESS	----------------------------------------------------------------
 
-    private static void GestureMatch(List<Vector2> pointArray) 
+    private static float GestureMatch(List<Vector2> pointArray, List<Vector2> p2) 
     {
 	    var tempDistance = Mathf.Infinity;
-	    var count = 0;
 
-	    for (var i = 0; i < GestureTemplates.Templates.Count; ++i) 
+        var distance = CalcDistanceAtOptimalAngle(pointArray, p2, -angleRange, angleRange);
+
+        if (distance < tempDistance)
         {
-		    var distance = CalcDistanceAtOptimalAngle(pointArray, GestureTemplates.Templates[i], -angleRange, angleRange);
-    		
-		    if (distance < tempDistance)	
-            {
-			    tempDistance = distance;
-			    count = i;
-		    }
-	    }
+            tempDistance = distance;
+        }
 
 	    var halfDiagonal = 0.5f * Mathf.Sqrt(Mathf.Pow(sizeOfScaleRect, 2) + Mathf.Pow(sizeOfScaleRect, 2));
 	    var score = 1.0f - (tempDistance / halfDiagonal);
-    	
-	    // print the result
-    	
-	    if (score < 0.7f)
-        {
-		    Debug.Log("NO MATCH " + score );
-		    GestureObserver._textMesh.text = "RESULT: NO MATCH " +  "\n" + "SCORE: " + Mathf.Round(100 * score) +"%";
-	    } else {
-		    Debug.Log("RESULT: " + GestureTemplates.TemplateNames[count] + " SCORE: " + score);
-		    GestureObserver._textMesh.text = "RESULT: " + GestureTemplates.TemplateNames[count] + "\n" + "SCORE: " + Mathf.Round(100 * score) +"%";
-	    }
 
+        return score;
     }
 
 
