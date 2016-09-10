@@ -15,6 +15,11 @@ public class AppContext : SignalContext
     protected override void mapBindings()
     {
         base.mapBindings();
-        commandBinder.Bind<AppStartSignal>().To<AppStartCommand>().Once();
+
+        injectionBinder.Bind<IGestureInput>().To<GestureInputContext>().ToSingleton();
+
+        commandBinder.Bind<AppStartSignal>().To<AppStartCommand>().To<BindInputCommand>().Once();
+        commandBinder.Bind<GestureStartSignal>().To<GestureStartCommand>();
+        commandBinder.Bind<GestureEndSignal>().To<GestureEndCommand>();
     }
 }
