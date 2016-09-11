@@ -1,8 +1,6 @@
 using System;
 using GCon;
 using strange.extensions.command.impl;
-using strange.extensions.signal.impl;
-using UnityEngine;
 
 public class GestureStartCommand : Command
 {
@@ -10,16 +8,30 @@ public class GestureStartCommand : Command
     public Gesture Gesture { get; private set; }
     
     [Inject]
-    public IGameSessionModel model { get; private set; }
+    public IGameSessionModel Model { get; private set; }
+
+    [Inject]
+    public GestureRendererUpdateSignal GestureRendererUpdateSignal { get; private set; }
+
+    [Inject]
+    public GestureRendererCreateSignal GestureRendererCreateSignal { get; private set; }
+
 
     public override void Execute()
     {
-        Debug.Log("gestrue starget at " + Gesture.EndPoint);
-
-        model.GameState.Value =
+        Model.GameState.Value =
             (GameSessionModel.GameStates)
-                (((int) model.GameState.Value + 1)%Enum.GetNames(typeof (GameSessionModel.GameStates)).Length);
+                (((int) Model.GameState.Value + 1)%Enum.GetNames(typeof (GameSessionModel.GameStates)).Length);
 
-//        dispatcher.Dispatch(Events.Game.GameStateChanged, evt.data);
+        if (Model.GameState.Value == GameSessionModel.GameStates.DrawLine1 ||
+            Model.GameState.Value == GameSessionModel.GameStates.DrawLine2)
+        {
+            GestureRendererCreateSignal.Dispatch(Gesture);
+
+            Gesture.OnGestureStay += g =>
+            {
+                GestureRendererUpdateSignal.Dispatch(Gesture);
+            };
+        }
     }
 }

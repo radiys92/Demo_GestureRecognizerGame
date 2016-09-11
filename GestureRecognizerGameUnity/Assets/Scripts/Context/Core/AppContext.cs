@@ -24,5 +24,9 @@ public class AppContext : SignalContext
         commandBinder.Bind<AppStartSignal>().To<AppStartCommand>().To<BindInputCommand>().Once();
         commandBinder.Bind<GestureStartSignal>().To<GestureStartCommand>();
         commandBinder.Bind<GestureEndSignal>().To<GestureEndCommand>();
+
+        commandBinder.Bind<GestureRendererCreateSignal>().To<CreateGestureRendererCommand>();
+        commandBinder.Bind<GestureRendererClearSignal>().To<ClearGestureRenderersCommand>();
+        commandBinder.Bind<GestureRendererUpdateSignal>().To<UpdateGestureRendererCommand>();
     }
 }

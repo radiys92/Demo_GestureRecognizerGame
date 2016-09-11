@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using GCon;
+using UnityEngine;
 
 public interface IGameSessionModel
 {
@@ -6,4 +8,5 @@ public interface IGameSessionModel
     HandledProperty<Gesture> FirstGesture { get; }
     HandledProperty<Gesture> SecondGesture { get; }
     HandledProperty<float> ComparsionScore { get; }
+    List<LineRenderer> LineRenderers { get;}
 }

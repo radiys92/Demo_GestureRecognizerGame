@@ -11,6 +11,9 @@ public class GestureEndCommand : Command
     [Inject]
     public IGameSessionModel Model { get; private set; }
 
+    [Inject]
+    public GestureRendererClearSignal GestureRendererClearSignal { get; private set; }
+
     public override void Execute()
     {
 //        Debug.Log("gestrue end at "+Gesture.StartPoint);
@@ -21,6 +24,7 @@ public class GestureEndCommand : Command
                 Model.FirstGesture.Value = null;
                 Model.SecondGesture.Value = null;
                 Model.ComparsionScore.Value = -1;
+                GestureRendererClearSignal.Dispatch();
                 break;
             case GameSessionModel.GameStates.DrawLine1:
                 Model.FirstGesture.Value = Gesture;

@@ -1,6 +1,5 @@
 using System;
 using GCon;
-using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
 
 public class DebugStatusBarMediator : EventMediator
@@ -56,9 +55,10 @@ public class DebugStatusBarMediator : EventMediator
     {
         if (score <= 0) return;
 
-        if (score > 0.9) View.UpdateText("Great! Three stars!");
-        else if (score > 0.8) View.UpdateText("You can do better, but this is normal... Go forward.");
-        else View.UpdateText("Level failed");
+        var scoreTxt = string.Format("\n(score is {0})", score);
+        if (score > 0.9) View.UpdateText("Great! Three stars!"+scoreTxt);
+        else if (score > 0.7) View.UpdateText("You can do better, but this is normal... Go forward."+scoreTxt);
+        else View.UpdateText("Level failed"+scoreTxt);
     }
 
     private void OnSecondGestureSetted(Gesture g)
