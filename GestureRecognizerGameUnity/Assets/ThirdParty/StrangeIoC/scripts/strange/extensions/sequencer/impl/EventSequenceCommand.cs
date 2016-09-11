@@ -20,10 +20,8 @@
  * @deprecated
  */
 
-using System;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.sequencer.impl;
 
 namespace strange.extensions.sequencer.impl
 {

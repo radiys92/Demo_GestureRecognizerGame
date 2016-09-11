@@ -25,7 +25,6 @@
  * - a marker for running multiple commands in parallel (default) or sequentially.
  */
 
-using System;
 using strange.framework.api;
 
 namespace strange.extensions.command.api

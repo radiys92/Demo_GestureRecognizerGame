@@ -21,14 +21,10 @@
  */
 
 using System;
-using System.Collections.Generic;
 using strange.extensions.dispatcher.api;
-using strange.extensions.injector.api;
 using strange.extensions.sequencer.api;
-using strange.extensions.command.api;
 using strange.extensions.command.impl;
 using strange.framework.api;
-using strange.framework.impl;
 
 namespace strange.extensions.sequencer.impl
 {

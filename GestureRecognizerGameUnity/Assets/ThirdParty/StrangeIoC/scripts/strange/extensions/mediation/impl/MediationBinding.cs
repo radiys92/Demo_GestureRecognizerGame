@@ -23,7 +23,6 @@
  * perfectly to Binding.
  */
 
-using System;
 using strange.extensions.mediation.api;
 using strange.framework.impl;
 

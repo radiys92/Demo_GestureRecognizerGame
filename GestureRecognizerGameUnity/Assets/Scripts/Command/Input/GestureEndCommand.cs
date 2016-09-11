@@ -1,7 +1,6 @@
 using System;
 using GCon;
 using strange.extensions.command.impl;
-using UnityEngine;
 
 public class GestureEndCommand : Command
 {

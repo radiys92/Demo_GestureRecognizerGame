@@ -24,7 +24,6 @@
  * should be destroyed immediately after a single use.
  */
 
-using System;
 using strange.extensions.command.api;
 using strange.framework.impl;
 

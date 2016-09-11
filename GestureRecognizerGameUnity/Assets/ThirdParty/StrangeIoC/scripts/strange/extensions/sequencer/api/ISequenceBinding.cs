@@ -20,10 +20,7 @@
  * @deprecated
  */
 
-using System;
 using strange.extensions.command.api;
-using strange.extensions.sequencer.api;
-using strange.framework.api;
 
 namespace strange.extensions.sequencer.api
 {

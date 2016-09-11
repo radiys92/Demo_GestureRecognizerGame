@@ -23,7 +23,6 @@
  * @see strange.extensions.injector.api.ICrossContextInjectionBinder
  */
 
-using strange.extensions.injector.impl;
 using strange.extensions.injector.api;
 using strange.framework.api;
 

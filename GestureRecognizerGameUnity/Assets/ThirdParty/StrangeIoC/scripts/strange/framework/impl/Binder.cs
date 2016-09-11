@@ -32,7 +32,6 @@
  * instantiation of a particular class.
  */
 
-using System;
 using System.Collections.Generic;
 using strange.framework.api;
 

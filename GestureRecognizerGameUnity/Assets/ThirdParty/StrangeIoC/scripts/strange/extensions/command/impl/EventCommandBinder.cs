@@ -20,7 +20,6 @@
  * A subclass of CommandBinder which relies on an IEventDispatcher as the common system bus.
  */
 
-using System;
 using strange.extensions.command.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.pool.api;

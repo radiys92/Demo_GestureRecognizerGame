@@ -34,8 +34,6 @@
  * @see strange.framework.api.IBinding
  */
 
-using System;
-
 namespace strange.framework.api
 {
 	public interface IBinder

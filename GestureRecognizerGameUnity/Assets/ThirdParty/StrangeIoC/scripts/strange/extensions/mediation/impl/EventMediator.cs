@@ -21,7 +21,6 @@
  * class for your Mediators to extend if you're using MVCSContext.
  */
 
-using System;
 using strange.extensions.context.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 

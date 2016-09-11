@@ -20,7 +20,6 @@
  * @deprecated
  */
 
-using System;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.sequencer.api;
 

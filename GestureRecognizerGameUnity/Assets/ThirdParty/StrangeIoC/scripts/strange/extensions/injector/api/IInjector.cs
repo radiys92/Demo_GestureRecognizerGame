@@ -38,10 +38,7 @@
  * @see strange.extensions.injector.api.IInjectorFactory
  */
 
-using System;
-using System.Collections.Generic;
 using strange.extensions.reflector.api;
-using strange.framework.api;
 
 namespace strange.extensions.injector.api
 {

@@ -25,7 +25,6 @@
  * dispatcher into a View.
  */
 
-using System;
 using strange.extensions.dispatcher.eventdispatcher.api;
 
 namespace strange.extensions.mediation.impl

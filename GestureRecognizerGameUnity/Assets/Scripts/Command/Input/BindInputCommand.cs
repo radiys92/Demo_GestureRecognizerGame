@@ -1,6 +1,5 @@
 using GCon;
 using strange.extensions.command.impl;
-using UnityEngine;
 
 public class BindInputCommand : Command
 {

@@ -38,7 +38,6 @@
  * relay that Event to other Contexts.
  */
 
-using System;
 using strange.extensions.dispatcher.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.context.api;

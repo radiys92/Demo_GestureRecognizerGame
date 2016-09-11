@@ -23,7 +23,6 @@
 using System;
 using strange.extensions.command.impl;
 using strange.extensions.sequencer.api;
-using strange.framework.api;
 using strange.framework.impl;
 
 namespace strange.extensions.sequencer.impl

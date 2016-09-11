@@ -28,7 +28,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using strange.extensions.reflector.api;
 using strange.framework.api;
-using strange.framework.impl;
 using System.Collections;
 
 namespace strange.extensions.reflector.impl

@@ -28,8 +28,6 @@
  * @see strange.extensions.dispatcher.api.ITriggerable
  */
 
-using System;
-
 namespace strange.extensions.dispatcher.api
 {
 	public interface ITriggerProvider

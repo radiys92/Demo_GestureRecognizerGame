@@ -31,9 +31,7 @@
  * 
  * Calling `Fail()` will terminate any sequence in which the Command is operating, but
  * has no effect on Commands operating in parallel.
- */ 
-
-using System;
+ */
 
 namespace strange.extensions.command.api
 {

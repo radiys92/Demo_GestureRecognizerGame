@@ -20,9 +20,8 @@
  * @deprecated
  * 
  * @see strange.extensions.command.api.ICommand
- */ 
+ */
 
-using System;
 using strange.extensions.command.api;
 
 namespace strange.extensions.sequencer.api

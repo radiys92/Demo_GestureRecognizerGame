@@ -24,7 +24,6 @@
  */
 
 using System;
-using System.Collections;
 using UnityEngine;
 using strange.extensions.injector.api;
 using strange.extensions.mediation.api;

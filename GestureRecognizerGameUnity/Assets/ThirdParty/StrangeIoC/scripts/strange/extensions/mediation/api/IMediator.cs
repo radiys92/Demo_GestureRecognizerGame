@@ -23,7 +23,6 @@
  * @see strange.extensions.mediation.api.IMediationBinder
  */
 
-using System;
 using UnityEngine;
 
 namespace strange.extensions.mediation.api

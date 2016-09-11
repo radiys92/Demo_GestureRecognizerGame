@@ -23,8 +23,6 @@
  * with bubbling.
  */
 
-using System;
-
 namespace strange.extensions.mediation.api
 {
 	public interface IView
