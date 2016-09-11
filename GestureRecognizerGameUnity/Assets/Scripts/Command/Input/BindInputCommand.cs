@@ -16,13 +16,11 @@ public class BindInputCommand : Command
 
     private void OnGestureStart(Gesture g)
     {
-        Debug.Log("push signal start");
         injectionBinder.GetInstance<GestureStartSignal>().Dispatch(g);
     }
     
     private void OnGestureEnd(Gesture g)
     {
-        Debug.Log("push signal end");
         injectionBinder.GetInstance<GestureEndSignal>().Dispatch(g);
     }
 }

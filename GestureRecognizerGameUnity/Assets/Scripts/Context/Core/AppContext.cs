@@ -17,6 +17,9 @@ public class AppContext : SignalContext
         base.mapBindings();
 
         injectionBinder.Bind<IGestureInput>().To<GestureInputContext>().ToSingleton();
+        injectionBinder.Bind<IGameSessionModel>().To<GameSessionModel>().ToSingleton();
+
+        mediationBinder.Bind<DebugStatusBarView>().To<DebugStatusBarMediator>();
 
         commandBinder.Bind<AppStartSignal>().To<AppStartCommand>().To<BindInputCommand>().Once();
         commandBinder.Bind<GestureStartSignal>().To<GestureStartCommand>();
