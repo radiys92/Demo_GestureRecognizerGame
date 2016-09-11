@@ -1,9 +1,7 @@
+using GCon;
+
 public class GameSessionModel : IGameSessionModel
 {
-    public GameSessionModel()
-    {
-    }
-
     public enum GameStates
     {
         None,
@@ -12,10 +10,16 @@ public class GameSessionModel : IGameSessionModel
         Compare
     }
 
-    private readonly HandledProperty<GameStates> _gameState = new HandledProperty<GameStates>(GameStates.None);
-
-    public HandledProperty<GameStates> GameState
+    public GameSessionModel()
     {
-        get { return _gameState; }
+        GameState = new HandledProperty<GameStates>(GameStates.None);
+        FirstGesture = new HandledProperty<Gesture>();
+        SecondGesture = new HandledProperty<Gesture>();
+        ComparsionScore = new HandledProperty<float>();
     }
+
+    public HandledProperty<GameStates> GameState { get; private set; }
+    public HandledProperty<Gesture> FirstGesture { get; private set; }
+    public HandledProperty<Gesture> SecondGesture { get; private set; }
+    public HandledProperty<float> ComparsionScore { get; private set; }
 }
