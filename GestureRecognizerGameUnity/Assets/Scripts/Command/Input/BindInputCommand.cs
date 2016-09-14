@@ -1,25 +1,30 @@
+using Core;
 using GCon;
+using Logic.Signals;
 using strange.extensions.command.impl;
 
-public class BindInputCommand : Command
+namespace Logic.Commands
 {
-    [Inject]
-    public IGestureInput _gestureInput { get; private set; }
-
-    public override void Execute()
+    public class BindInputCommand : Command
     {
-        _gestureInput.OnGestureStart += OnGestureStart;
-        _gestureInput.OnGestureEnd += OnGestureEnd;
-    }
+        [Inject]
+        public IGestureInput _gestureInput { get; private set; }
+
+        public override void Execute()
+        {
+            _gestureInput.OnGestureStart += OnGestureStart;
+            _gestureInput.OnGestureEnd += OnGestureEnd;
+        }
 
 
-    private void OnGestureStart(Gesture g)
-    {
-        injectionBinder.GetInstance<GestureStartSignal>().Dispatch(g);
-    }
+        private void OnGestureStart(Gesture g)
+        {
+            injectionBinder.GetInstance<GestureStartSignal>().Dispatch(g);
+        }
     
-    private void OnGestureEnd(Gesture g)
-    {
-        injectionBinder.GetInstance<GestureEndSignal>().Dispatch(g);
+        private void OnGestureEnd(Gesture g)
+        {
+            injectionBinder.GetInstance<GestureEndSignal>().Dispatch(g);
+        }
     }
 }

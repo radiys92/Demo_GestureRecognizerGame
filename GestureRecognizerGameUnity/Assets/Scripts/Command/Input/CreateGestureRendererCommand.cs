@@ -1,43 +1,47 @@
 using GCon;
+using Model;
 using strange.extensions.command.impl;
 using UnityEngine;
 
-public class CreateGestureRendererCommand : Command
+namespace Logic.Commands
 {
-    [Inject]
-    public Gesture G { get; private set; }
-
-    [Inject]
-    public IGameSessionModel Model { get; private set; }
-
-    private static readonly Color[] Colors = {Color.red, Color.green};
-
-    private static int _colorInd = 0; // dirty hack :)
-
-    public override void Execute()
+    public class CreateGestureRendererCommand : Command
     {
-        Model.LineRenderers.Add(CreateLine());
-    }
+        [Inject]
+        public Gesture G { get; private set; }
 
-    private LineRenderer CreateLine()
-    {
-        var go = new GameObject("~Line");
-        var lr = go.AddComponent<LineRenderer>();
-        var mat = new Material(new Material(Shader.Find("MonoColor/OpaqueNLitColor")))
+        [Inject]
+        public IGameFlowModel Model { get; private set; }
+
+        private static readonly Color[] Colors = {Color.red, Color.green};
+
+        private static int _colorInd = 0; // dirty hack :)
+
+        public override void Execute()
         {
-            color = Colors[_colorInd%Colors.Length]
-        };
-        _colorInd++;
-        lr.material = mat;
-        lr.SetWidth(.1f,.1f);
+            Model.LineRenderers.Add(CreateLine());
+        }
 
-        lr.SetVertexCount(1);
-        var pos = Camera.main.ScreenToWorldPoint(G.StartPoint);
-        pos.z = 0;
-        lr.SetPosition(0, pos);
+        private LineRenderer CreateLine()
+        {
+            var go = new GameObject("~Line");
+            var lr = go.AddComponent<LineRenderer>();
+            var mat = new Material(new Material(Shader.Find("MonoColor/OpaqueNLitColor")))
+            {
+                color = Colors[_colorInd%Colors.Length]
+            };
+            _colorInd++;
+            lr.material = mat;
+            lr.SetWidth(.1f,.1f);
 
-        Model.LineRenderers.Add(lr);
+            lr.SetVertexCount(1);
+            var pos = Camera.main.ScreenToWorldPoint(G.StartPoint);
+            pos.z = 0;
+            lr.SetPosition(0, pos);
 
-        return lr;
+            Model.LineRenderers.Add(lr);
+
+            return lr;
+        }
     }
 }

@@ -1,32 +1,35 @@
 using System;
 
-public class HandledProperty<T>
+namespace Helpers
 {
-    public HandledProperty()
+    public class HandledProperty<T>
     {
-        
-    }
-
-    public HandledProperty(T defaultVlalue)
-    {
-        _value = defaultVlalue;
-    }
-
-    public event Action<T> OnPropertyUpdated;
-    private T _value;
-
-    public T Value
-    {
-        get
+        public HandledProperty()
         {
-            return _value;
+        
         }
 
-        set
+        public HandledProperty(T defaultVlalue)
         {
-            _value = value;
-            if (OnPropertyUpdated != null)
-                OnPropertyUpdated(value);
+            _value = defaultVlalue;
+        }
+
+        public event Action<T> OnPropertyUpdated;
+        private T _value;
+
+        public T Value
+        {
+            get
+            {
+                return _value;
+            }
+
+            set
+            {
+                _value = value;
+                if (OnPropertyUpdated != null)
+                    OnPropertyUpdated(value);
+            }
         }
     }
 }

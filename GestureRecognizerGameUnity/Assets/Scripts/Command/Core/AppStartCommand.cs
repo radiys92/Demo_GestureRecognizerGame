@@ -1,10 +1,13 @@
 using strange.extensions.command.impl;
 using UnityEngine;
 
-public class AppStartCommand : Command
+namespace Logic.Commands
 {
-    public override void Execute()
+    public class AppStartCommand : Command
     {
-        Debug.Log("App started!");
+        public override void Execute()
+        {
+            Debug.Log("App started!");
+        }
     }
 }

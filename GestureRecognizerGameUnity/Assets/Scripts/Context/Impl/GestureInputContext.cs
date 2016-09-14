@@ -1,23 +1,26 @@
 using System;
 using GCon;
 
-public class GestureInputContext : IGestureInput
+namespace Core
 {
-    public GestureInputContext()
+    public class GestureInputContext : IGestureInput
     {
-        GestureController.OnGestureStart = g =>
+        public GestureInputContext()
         {
-            if (OnGestureStart != null)
-                OnGestureStart(g);
-        };
+            GestureController.OnGestureStart = g =>
+            {
+                if (OnGestureStart != null)
+                    OnGestureStart(g);
+            };
 
-        GestureController.OnGestureEnd = g =>
-        {
-            if (OnGestureEnd != null)
-                OnGestureEnd(g);
-        };
+            GestureController.OnGestureEnd = g =>
+            {
+                if (OnGestureEnd != null)
+                    OnGestureEnd(g);
+            };
+        }
+
+        public event Action<Gesture> OnGestureStart;
+        public event Action<Gesture> OnGestureEnd;
     }
-
-    public event Action<Gesture> OnGestureStart;
-    public event Action<Gesture> OnGestureEnd;
 }

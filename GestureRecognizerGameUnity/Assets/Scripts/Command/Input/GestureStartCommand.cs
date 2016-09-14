@@ -1,37 +1,42 @@
 using System;
 using GCon;
+using Logic.Signals;
+using Model;
 using strange.extensions.command.impl;
 
-public class GestureStartCommand : Command
+namespace Logic.Commands
 {
-    [Inject]
-    public Gesture Gesture { get; private set; }
-    
-    [Inject]
-    public IGameSessionModel Model { get; private set; }
-
-    [Inject]
-    public GestureRendererUpdateSignal GestureRendererUpdateSignal { get; private set; }
-
-    [Inject]
-    public GestureRendererCreateSignal GestureRendererCreateSignal { get; private set; }
-
-
-    public override void Execute()
+    public class GestureStartCommand : Command
     {
-        Model.GameState.Value =
-            (GameSessionModel.GameStates)
-                (((int) Model.GameState.Value + 1)%Enum.GetNames(typeof (GameSessionModel.GameStates)).Length);
+        [Inject]
+        public Gesture Gesture { get; private set; }
+    
+        [Inject]
+        public IGameFlowModel Model { get; private set; }
 
-        if (Model.GameState.Value == GameSessionModel.GameStates.DrawLine1 ||
-            Model.GameState.Value == GameSessionModel.GameStates.DrawLine2)
+        [Inject]
+        public GestureRendererUpdateSignal GestureRendererUpdateSignal { get; private set; }
+
+        [Inject]
+        public GestureRendererCreateSignal GestureRendererCreateSignal { get; private set; }
+
+
+        public override void Execute()
         {
-            GestureRendererCreateSignal.Dispatch(Gesture);
+            Model.GameState.Value =
+                (GameFlowModel.GameStates)
+                    (((int) Model.GameState.Value + 1)%Enum.GetNames(typeof (GameFlowModel.GameStates)).Length);
 
-            Gesture.OnGestureStay += g =>
+            if (Model.GameState.Value == GameFlowModel.GameStates.DrawLine1 ||
+                Model.GameState.Value == GameFlowModel.GameStates.DrawLine2)
             {
-                GestureRendererUpdateSignal.Dispatch(Gesture);
-            };
+                GestureRendererCreateSignal.Dispatch(Gesture);
+
+                Gesture.OnGestureStay += g =>
+                {
+                    GestureRendererUpdateSignal.Dispatch(Gesture);
+                };
+            }
         }
     }
 }

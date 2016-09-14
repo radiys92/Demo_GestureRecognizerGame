@@ -1,8 +1,11 @@
 using System;
 using GCon;
 
-public interface IGestureInput
+namespace Core
 {
-    event Action<Gesture> OnGestureStart;
-    event Action<Gesture> OnGestureEnd;
+    public interface IGestureInput
+    {
+        event Action<Gesture> OnGestureStart;
+        event Action<Gesture> OnGestureEnd;
+    }
 }

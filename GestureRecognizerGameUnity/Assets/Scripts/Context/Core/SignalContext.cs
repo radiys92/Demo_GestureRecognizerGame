@@ -4,18 +4,21 @@ using strange.extensions.context.api;
 using strange.extensions.context.impl;
 using UnityEngine;
 
-public class SignalContext :  MVCSContext
+namespace Core
 {
-    public SignalContext(MonoBehaviour view)
-        : base(view, ContextStartupFlags.MANUAL_MAPPING)
+    public class SignalContext :  MVCSContext
     {
-    }
+        public SignalContext(MonoBehaviour view)
+            : base(view, ContextStartupFlags.MANUAL_MAPPING)
+        {
+        }
 
-    protected override void addCoreComponents()
-    {
-        base.addCoreComponents();
+        protected override void addCoreComponents()
+        {
+            base.addCoreComponents();
 
-        injectionBinder.Unbind<ICommandBinder>();
-        injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>();
+            injectionBinder.Unbind<ICommandBinder>();
+            injectionBinder.Bind<ICommandBinder>().To<SignalCommandBinder>();
+        }
     }
 }

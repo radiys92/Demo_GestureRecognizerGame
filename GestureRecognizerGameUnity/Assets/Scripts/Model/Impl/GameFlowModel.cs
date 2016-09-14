@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using GCon;
+using Helpers;
+using Model;
 using UnityEngine;
 
-public class GameSessionModel : IGameSessionModel
+public class GameFlowModel : IGameFlowModel
 {
     public enum GameStates
     {
@@ -12,7 +14,7 @@ public class GameSessionModel : IGameSessionModel
         Compare
     }
 
-    public GameSessionModel()
+    public GameFlowModel()
     {
         GameState = new HandledProperty<GameStates>(GameStates.None);
         FirstGesture = new HandledProperty<Gesture>();

@@ -1,17 +1,21 @@
+using Model;
 using strange.extensions.command.impl;
 using UnityEngine;
 
-public class ClearGestureRenderersCommand : Command
+namespace Logic.Commands
 {
-    [Inject]
-    public IGameSessionModel Model { get; private set; }
-
-    public override void Execute()
+    public class ClearGestureRenderersCommand : Command
     {
-        foreach (var lineRenderer in Model.LineRenderers)
+        [Inject]
+        public IGameFlowModel Model { get; private set; }
+
+        public override void Execute()
         {
-            Object.Destroy(lineRenderer.gameObject);
+            foreach (var lineRenderer in Model.LineRenderers)
+            {
+                Object.Destroy(lineRenderer.gameObject);
+            }
+            Model.LineRenderers.Clear();
         }
-        Model.LineRenderers.Clear();
     }
 }
