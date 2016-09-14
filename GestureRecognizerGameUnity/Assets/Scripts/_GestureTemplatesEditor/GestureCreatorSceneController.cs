@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using GCon;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class SceneController : MonoBehaviour
+public class GestureCreatorSceneController : MonoBehaviour
 {
     private const string TemplatesAssetPath = "GestureTemplates";
 
