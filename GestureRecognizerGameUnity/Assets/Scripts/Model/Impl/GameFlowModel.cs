@@ -1,31 +1,34 @@
 using System.Collections.Generic;
 using GCon;
 using Helpers;
-using Model;
+using Model.Api;
 using UnityEngine;
 
-public class GameFlowModel : IGameFlowModel
+namespace Model.Impl
 {
-    public enum GameStates
+    public class GameFlowModel : IGameFlowModel
     {
-        None,
-        DrawLine1,
-        DrawLine2,
-        Compare
-    }
+        public enum GameStates
+        {
+            None,
+            DrawLine1,
+            DrawLine2,
+            Compare
+        }
 
-    public GameFlowModel()
-    {
-        GameState = new HandledProperty<GameStates>(GameStates.None);
-        FirstGesture = new HandledProperty<Gesture>();
-        SecondGesture = new HandledProperty<Gesture>();
-        ComparsionScore = new HandledProperty<float>();
-        LineRenderers = new List<LineRenderer>();
-    }
+        public GameFlowModel()
+        {
+            GameState = new HandledProperty<GameStates>(GameStates.None);
+            FirstGesture = new HandledProperty<Gesture>();
+            SecondGesture = new HandledProperty<Gesture>();
+            ComparsionScore = new HandledProperty<float>();
+            LineRenderers = new List<LineRenderer>();
+        }
 
-    public HandledProperty<GameStates> GameState { get; private set; }
-    public HandledProperty<Gesture> FirstGesture { get; private set; }
-    public HandledProperty<Gesture> SecondGesture { get; private set; }
-    public HandledProperty<float> ComparsionScore { get; private set; }
-    public List<LineRenderer> LineRenderers { get; private set; }
+        public HandledProperty<GameStates> GameState { get; private set; }
+        public HandledProperty<Gesture> FirstGesture { get; private set; }
+        public HandledProperty<Gesture> SecondGesture { get; private set; }
+        public HandledProperty<float> ComparsionScore { get; private set; }
+        public List<LineRenderer> LineRenderers { get; private set; }
+    }
 }

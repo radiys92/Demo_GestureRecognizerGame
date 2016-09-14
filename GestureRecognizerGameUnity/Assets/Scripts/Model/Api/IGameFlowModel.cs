@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using GCon;
 using Helpers;
+using Model.Impl;
 using UnityEngine;
 
-namespace Model
+namespace Model.Api
 {
     public interface IGameFlowModel
     {

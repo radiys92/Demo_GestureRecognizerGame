@@ -1,6 +1,7 @@
 using System;
 using GCon;
-using Model;
+using Model.Api;
+using Model.Impl;
 using strange.extensions.mediation.impl;
 
 namespace UIView

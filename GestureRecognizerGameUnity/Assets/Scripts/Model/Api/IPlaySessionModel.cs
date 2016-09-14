@@ -1,4 +1,4 @@
-namespace Model
+namespace Model.Api
 {
     public interface IPlaySessionModel
     {
