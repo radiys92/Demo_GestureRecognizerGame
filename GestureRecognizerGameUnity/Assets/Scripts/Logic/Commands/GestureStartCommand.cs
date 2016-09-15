@@ -24,20 +24,20 @@ namespace Logic.Commands
 
         public override void Execute()
         {
-            Model.GameState.Value =
-                (GameStates)
-                    (((int) Model.GameState.Value + 1)%Enum.GetNames(typeof (GameStates)).Length);
-
-            if (Model.GameState.Value == GameStates.DrawLine1 ||
-                Model.GameState.Value == GameStates.DrawLine2)
-            {
-                GestureRendererCreateSignal.Dispatch(Gesture);
-
-                Gesture.OnGestureStay += g =>
-                {
-                    GestureRendererUpdateSignal.Dispatch(Gesture);
-                };
-            }
+//            Model.GameState.Value =
+//                (GameStates)
+//                    (((int) Model.GameState.Value + 1)%Enum.GetNames(typeof (GameStates)).Length);
+//
+//            if (Model.GameState.Value == GameStates.DrawLine1 ||
+//                Model.GameState.Value == GameStates.DrawLine2)
+//            {
+//                GestureRendererCreateSignal.Dispatch(Gesture);
+//
+//                Gesture.OnGestureStay += g =>
+//                {
+//                    GestureRendererUpdateSignal.Dispatch(Gesture);
+//                };
+//            }
         }
     }
 }

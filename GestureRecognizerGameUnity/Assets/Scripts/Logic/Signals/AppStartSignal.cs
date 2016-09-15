@@ -16,5 +16,9 @@ namespace Logic.Signals
 
     public class GestureRendererUpdateSignal : Signal<Gesture> { }
 
+
+
     public class ChangeGameFlowStateSignal : Signal<GameStates> { }
+
+    public class RestartGamePlaySignal : Signal { }
 }

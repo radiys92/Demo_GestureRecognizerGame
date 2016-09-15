@@ -36,23 +36,23 @@ namespace UIView
 
         private void SetCurrentStateDescription(GameStates state)
         {
-            switch (state)
-            {
-                case GameStates.None:
-                    View.UpdateText("Start draging to draw first gesture");
-                    break;
-                case GameStates.DrawLine1:
-                    View.UpdateText("Drawing gesture 1");
-                    break;
-                case GameStates.DrawLine2:
-                    View.UpdateText("Drawing gesture 2");
-                    break;
-                case GameStates.Compare:
-                    View.UpdateText("Comparing...");
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("state", state, null);
-            }
+//            switch (state)
+//            {
+//                case GameStates.None:
+//                    View.UpdateText("Start draging to draw first gesture");
+//                    break;
+//                case GameStates.DrawLine1:
+//                    View.UpdateText("Drawing gesture 1");
+//                    break;
+//                case GameStates.DrawLine2:
+//                    View.UpdateText("Drawing gesture 2");
+//                    break;
+//                case GameStates.Compare:
+//                    View.UpdateText("Comparing...");
+//                    break;
+//                default:
+//                    throw new ArgumentOutOfRangeException("state", state, null);
+//            }
         }
 
         private void OnComparsionScoreSetted(float score)

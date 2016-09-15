@@ -26,6 +26,7 @@ namespace UIView.Mediator
             View.OnResumeBtnClick.RemoveAllListeners();
             View.OnrestartBtnClick.RemoveAllListeners();
             View.OnGoToMainMenuBtnClick.RemoveAllListeners();
+            View.OnShow.RemoveAllListeners();
         }
 
         public override void OnRegister()
@@ -35,6 +36,12 @@ namespace UIView.Mediator
             View.OnResumeBtnClick.AddListener(Resume);
             View.OnrestartBtnClick.AddListener(Restart);
             View.OnGoToMainMenuBtnClick.AddListener(GoToMainMenu);
+            View.OnShow.AddListener(OnShow);
+        }
+
+        private void OnShow()
+        {
+            View.Score = PlaySession.Score.Value;
         }
 
         private void GoToMainMenu()

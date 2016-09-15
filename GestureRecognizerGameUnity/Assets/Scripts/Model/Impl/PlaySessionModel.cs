@@ -5,7 +5,7 @@ namespace Model.Impl
 {
     public class PlaySessionModel : IPlaySessionModel
     {
-        public HandledProperty<int> Score;
+        public HandledProperty<int> Score { get; private set; }
 
         public PlaySessionModel()
         {
