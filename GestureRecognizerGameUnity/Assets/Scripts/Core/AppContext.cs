@@ -4,7 +4,6 @@ using Logic.Commands;
 using Logic.Signals;
 using Model.Api;
 using Model.Impl;
-using UIView;
 using UnityEngine;
 
 namespace Core

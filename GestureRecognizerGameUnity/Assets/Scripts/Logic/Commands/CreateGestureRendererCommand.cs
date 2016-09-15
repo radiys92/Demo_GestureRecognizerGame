@@ -1,5 +1,4 @@
 using GCon;
-using Model;
 using Model.Api;
 using strange.extensions.command.impl;
 using UnityEngine;
