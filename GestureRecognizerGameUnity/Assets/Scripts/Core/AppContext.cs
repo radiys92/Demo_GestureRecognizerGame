@@ -40,6 +40,10 @@ namespace Core
 
             // logic layer
             commandBinder.Bind<AppStartSignal>().To<AppStartCommand>().To<BindInputCommand>().Once();
+
+            commandBinder.Bind<ChangeGameFlowStateSignal>().To<ChangeGameFlowStateCommand>();
+            commandBinder.Bind<RestartGamePlaySignal>().To<RestartGamePlayCommand>();
+
             commandBinder.Bind<GestureStartSignal>().To<GestureStartCommand>();
             commandBinder.Bind<GestureEndSignal>().To<GestureEndCommand>();
 

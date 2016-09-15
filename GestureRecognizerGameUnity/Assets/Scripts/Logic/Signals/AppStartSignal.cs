@@ -6,6 +6,7 @@ namespace Logic.Signals
 {
     public class AppStartSignal : Signal { }
 
+
     public class GestureStartSignal : Signal<Gesture> { }
 
     public class GestureEndSignal : Signal<Gesture> { }
