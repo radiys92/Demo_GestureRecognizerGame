@@ -24,7 +24,7 @@ namespace UIView.Mediator
             GameFlowModel.GameState.OnPropertyUpdated -= OnGameStateChanged;
             PlaySession.Score.OnPropertyUpdated -= OnScoreChanged;
             View.OnResumeBtnClick.RemoveAllListeners();
-            View.OnResumeBtnClick.RemoveAllListeners();
+            View.OnrestartBtnClick.RemoveAllListeners();
             View.OnGoToMainMenuBtnClick.RemoveAllListeners();
         }
 
@@ -33,7 +33,7 @@ namespace UIView.Mediator
             GameFlowModel.GameState.OnPropertyUpdated += OnGameStateChanged;
             PlaySession.Score.OnPropertyUpdated += OnScoreChanged;
             View.OnResumeBtnClick.AddListener(Resume);
-            View.OnResumeBtnClick.AddListener(Restart);
+            View.OnrestartBtnClick.AddListener(Restart);
             View.OnGoToMainMenuBtnClick.AddListener(GoToMainMenu);
         }
 
