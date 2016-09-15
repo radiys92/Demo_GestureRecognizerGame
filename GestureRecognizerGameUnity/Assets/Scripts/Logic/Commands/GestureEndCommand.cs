@@ -19,10 +19,10 @@ namespace Logic.Commands
         [Inject]
         public GestureRendererClearSignal GestureRendererClearSignal { get; private set; }
 
-//        public override void Execute()
-//        {
-////        Debug.Log("gestrue end at "+Gesture.StartPoint);
-//
+        public override void Execute()
+        {
+//        Debug.Log("gestrue end at "+Gesture.StartPoint);
+
 //            switch (Model.GameState.Value)
 //            {
 //                case GameStates.None:
@@ -46,6 +46,6 @@ namespace Logic.Commands
 //                default:
 //                    throw new ArgumentOutOfRangeException();
 //            }
-//        }
+        }
     }
 }

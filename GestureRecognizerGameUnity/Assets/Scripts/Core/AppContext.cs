@@ -20,6 +20,7 @@ namespace Core
         {
             base.Launch();
             injectionBinder.GetInstance<AppStartSignal>().Dispatch();
+            Debug.Log("launched");
         }
 
         protected override void mapBindings()
@@ -50,6 +51,8 @@ namespace Core
             commandBinder.Bind<GestureRendererCreateSignal>().To<CreateGestureRendererCommand>();
             commandBinder.Bind<GestureRendererClearSignal>().To<ClearGestureRenderersCommand>();
             commandBinder.Bind<GestureRendererUpdateSignal>().To<UpdateGestureRendererCommand>();
+
+            Debug.Log("Bind finished");
         }
     }
 }

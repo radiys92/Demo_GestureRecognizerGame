@@ -5,10 +5,20 @@ namespace UIView.Context
 {
     public class AppContextView : ContextView
     {
+        private bool isFirstUpdate = true;
+
         private void Awake()
         {
             context = new AppContext(this);
-            context.Start();
+        }
+
+        void Update()
+        {
+            if (isFirstUpdate)
+            {
+                isFirstUpdate = false;
+                context.Start();
+            }
         }
     }
 }

@@ -18,14 +18,14 @@ namespace UIView
 
         public void SetVisibility(bool isVisible)
         {
-            if (!gameObject.activeInHierarchy)
-            {
-                Debug.LogWarningFormat(
-                    "Tried to change visibility of window {0} to {1} when it inactive at hierarcy. Skipped.",
-                    gameObject.name,
-                    isVisible);
-                return;
-            }
+//            if (!gameObject.activeInHierarchy)
+//            {
+//                Debug.LogWarningFormat(
+//                    "Tried to change visibility of window {0} to {1} when it inactive at hierarcy. Skipped.",
+//                    gameObject.name,
+//                    isVisible);
+//                return;
+//            }
 
             if (gameObject.activeSelf == isVisible)
                 return;
@@ -37,8 +37,9 @@ namespace UIView
                 OnHide.Invoke();
         }
 
-        protected void Awake()
+        protected override void Start()
         {
+            base.Start();
             SetVisibility(false);
         }
     }

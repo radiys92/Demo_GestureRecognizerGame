@@ -65,7 +65,7 @@ namespace UIView.Mediator
 
         private void OnGameStateChanged(GameStates obj)
         {
-            View.SetVisibility(obj == GameStates.Pause);
+            View.SetVisibility(obj == GameStates.GameOver);
         }
     }
 }
