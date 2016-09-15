@@ -30,7 +30,7 @@ namespace Core
             injectionBinder.Bind<IGestureTemplatesModel>().To<GestureTemplatesModel>();
             injectionBinder.Bind<IPlaySessionModel>().To<PlaySessionModel>();
 
-            mediationBinder.Bind<DebugStatusBarView>().To<DebugStatusBarMediator>();
+//            mediationBinder.Bind<DebugStatusBarView>().To<DebugStatusBarMediator>();
 
             commandBinder.Bind<AppStartSignal>().To<AppStartCommand>().To<BindInputCommand>().Once();
             commandBinder.Bind<GestureStartSignal>().To<GestureStartCommand>();
