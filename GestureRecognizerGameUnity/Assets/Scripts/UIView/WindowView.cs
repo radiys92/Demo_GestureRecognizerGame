@@ -8,6 +8,11 @@ namespace UIView
 
     public class WindowView : View
     {
+        public bool IsVisible 
+        {
+            get { return gameObject.activeSelf && gameObject.activeInHierarchy; }
+        }
+
         public readonly UnityEvent OnShow = new WindowEvent();
         public readonly UnityEvent OnHide = new WindowEvent();
 
