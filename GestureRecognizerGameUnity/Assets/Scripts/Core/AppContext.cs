@@ -4,6 +4,8 @@ using Logic.Commands;
 using Logic.Signals;
 using Model.Api;
 using Model.Impl;
+using UIView.Mediator;
+using UIView.Windows;
 using UnityEngine;
 
 namespace Core
@@ -24,13 +26,19 @@ namespace Core
         {
             base.mapBindings();
 
+            // model layer
             injectionBinder.Bind<IGestureInput>().To<GestureInputContext>().ToSingleton();
             injectionBinder.Bind<IGameFlowModel>().To<GameFlowModel>().ToSingleton();
             injectionBinder.Bind<IGestureTemplatesModel>().To<GestureTemplatesModel>();
             injectionBinder.Bind<IPlaySessionModel>().To<PlaySessionModel>();
 
-//            mediationBinder.Bind<DebugStatusBarView>().To<DebugStatusBarMediator>();
+            // view layer
+            mediationBinder.Bind<MainMenuWindow>().To<MainMenuWindowMediator>();
+            mediationBinder.Bind<InGameHud>().To<InGameHudMediator>();
+            mediationBinder.Bind<PauseWindow>().To<PauseWindowMediator>();
+            mediationBinder.Bind<GameOverWindow>().To<GameOverWindowMediator>();
 
+            // logic layer
             commandBinder.Bind<AppStartSignal>().To<AppStartCommand>().To<BindInputCommand>().Once();
             commandBinder.Bind<GestureStartSignal>().To<GestureStartCommand>();
             commandBinder.Bind<GestureEndSignal>().To<GestureEndCommand>();
