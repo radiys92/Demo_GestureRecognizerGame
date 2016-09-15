@@ -1,4 +1,5 @@
 using strange.extensions.mediation.impl;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace UIView
@@ -10,19 +11,30 @@ namespace UIView
         public readonly UnityEvent OnShow = new WindowEvent();
         public readonly UnityEvent OnHide = new WindowEvent();
 
-        public void Show()
+        public void SetVisibility(bool isVisible)
         {
-            gameObject.SetActive(true);
-        }
+            if (!gameObject.activeInHierarchy)
+            {
+                Debug.LogWarningFormat(
+                    "Tried to change visibility of window {0} to {1} when it inactive at hierarcy. Skipped.",
+                    gameObject.name,
+                    isVisible);
+                return;
+            }
 
-        public void Hide()
-        {
-            gameObject.SetActive(false);
+            if (gameObject.activeSelf == isVisible)
+                return;
+
+            gameObject.SetActive(isVisible);
+            if (isVisible)
+                OnShow.Invoke();
+            else
+                OnHide.Invoke();
         }
 
         protected void Awake()
         {
-            Hide();
+            SetVisibility(false);
         }
     }
 }

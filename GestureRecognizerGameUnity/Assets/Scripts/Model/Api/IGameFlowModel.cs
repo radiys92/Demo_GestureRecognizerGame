@@ -8,7 +8,7 @@ namespace Model.Api
 {
     public interface IGameFlowModel
     {
-        HandledProperty<GameFlowModel.GameStates> GameState { get; }
+        HandledProperty<GameStates> GameState { get; }
         HandledProperty<Gesture> FirstGesture { get; }
         HandledProperty<Gesture> SecondGesture { get; }
         HandledProperty<float> ComparsionScore { get; }

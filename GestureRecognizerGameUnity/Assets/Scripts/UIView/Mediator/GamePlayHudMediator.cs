@@ -2,7 +2,7 @@ using UIView.Windows;
 
 namespace UIView.Mediator
 {
-    public class InGameHudMediator : WindowViewMediator<InGameHud>
+    public class GamePlayHudMediator : WindowViewMediator<GamePlayHud>
     {
         public override void OnRegister()
         {

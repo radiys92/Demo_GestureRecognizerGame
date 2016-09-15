@@ -25,19 +25,19 @@ namespace Logic.Commands
 
             switch (Model.GameState.Value)
             {
-                case GameFlowModel.GameStates.None:
+                case GameStates.None:
                     Model.FirstGesture.Value = null;
                     Model.SecondGesture.Value = null;
                     Model.ComparsionScore.Value = -1;
                     GestureRendererClearSignal.Dispatch();
                     break;
-                case GameFlowModel.GameStates.DrawLine1:
+                case GameStates.DrawLine1:
                     Model.FirstGesture.Value = Gesture;
                     break;
-                case GameFlowModel.GameStates.DrawLine2:
+                case GameStates.DrawLine2:
                     Model.SecondGesture.Value = Gesture;
                     break;
-                case GameFlowModel.GameStates.Compare:
+                case GameStates.Compare:
                     Model.ComparsionScore.Value = GestureRecognizer.Compare(
                         Model.FirstGesture.Value, 
                         Model.SecondGesture.Value, 

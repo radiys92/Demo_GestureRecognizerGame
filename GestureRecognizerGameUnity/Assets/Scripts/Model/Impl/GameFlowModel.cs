@@ -8,14 +8,6 @@ namespace Model.Impl
 {
     public class GameFlowModel : IGameFlowModel
     {
-        public enum GameStates
-        {
-            None,
-            DrawLine1,
-            DrawLine2,
-            Compare
-        }
-
         public GameFlowModel()
         {
             GameState = new HandledProperty<GameStates>(GameStates.None);
@@ -30,5 +22,14 @@ namespace Model.Impl
         public HandledProperty<Gesture> SecondGesture { get; private set; }
         public HandledProperty<float> ComparsionScore { get; private set; }
         public List<LineRenderer> LineRenderers { get; private set; }
+    }
+
+    public enum GameStates
+    {
+        None,
+        MainMenu,
+        GamePlay,
+        Pause,
+        GameOver
     }
 }

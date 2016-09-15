@@ -34,20 +34,20 @@ namespace UIView
             Model.ComparsionScore.OnPropertyUpdated -= OnComparsionScoreSetted;
         }
 
-        private void SetCurrentStateDescription(GameFlowModel.GameStates state)
+        private void SetCurrentStateDescription(GameStates state)
         {
             switch (state)
             {
-                case GameFlowModel.GameStates.None:
+                case GameStates.None:
                     View.UpdateText("Start draging to draw first gesture");
                     break;
-                case GameFlowModel.GameStates.DrawLine1:
+                case GameStates.DrawLine1:
                     View.UpdateText("Drawing gesture 1");
                     break;
-                case GameFlowModel.GameStates.DrawLine2:
+                case GameStates.DrawLine2:
                     View.UpdateText("Drawing gesture 2");
                     break;
-                case GameFlowModel.GameStates.Compare:
+                case GameStates.Compare:
                     View.UpdateText("Comparing...");
                     break;
                 default:

@@ -34,7 +34,7 @@ namespace Core
 
             // view layer
             mediationBinder.Bind<MainMenuWindow>().To<MainMenuWindowMediator>();
-            mediationBinder.Bind<InGameHud>().To<InGameHudMediator>();
+            mediationBinder.Bind<GamePlayHud>().To<GamePlayHudMediator>();
             mediationBinder.Bind<PauseWindow>().To<PauseWindowMediator>();
             mediationBinder.Bind<GameOverWindow>().To<GameOverWindowMediator>();
 

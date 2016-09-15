@@ -1,4 +1,5 @@
 using GCon;
+using Model.Impl;
 using strange.extensions.signal.impl;
 
 namespace Logic.Signals
@@ -14,4 +15,6 @@ namespace Logic.Signals
     public class GestureRendererClearSignal : Signal { }
 
     public class GestureRendererUpdateSignal : Signal<Gesture> { }
+
+    public class ChangeGameFlowStateSignal : Signal<GameStates> { }
 }

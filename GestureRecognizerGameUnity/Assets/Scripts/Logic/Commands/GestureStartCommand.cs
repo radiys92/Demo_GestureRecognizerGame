@@ -25,11 +25,11 @@ namespace Logic.Commands
         public override void Execute()
         {
             Model.GameState.Value =
-                (GameFlowModel.GameStates)
-                    (((int) Model.GameState.Value + 1)%Enum.GetNames(typeof (GameFlowModel.GameStates)).Length);
+                (GameStates)
+                    (((int) Model.GameState.Value + 1)%Enum.GetNames(typeof (GameStates)).Length);
 
-            if (Model.GameState.Value == GameFlowModel.GameStates.DrawLine1 ||
-                Model.GameState.Value == GameFlowModel.GameStates.DrawLine2)
+            if (Model.GameState.Value == GameStates.DrawLine1 ||
+                Model.GameState.Value == GameStates.DrawLine2)
             {
                 GestureRendererCreateSignal.Dispatch(Gesture);
 

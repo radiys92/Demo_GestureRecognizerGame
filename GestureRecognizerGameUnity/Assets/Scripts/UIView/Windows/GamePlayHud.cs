@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UIView.Windows
 {
-    public class InGameHud : WindowView
+    public class GamePlayHud : WindowView
     {
         public Button PauseBtn;
         public Text ScoreTxt;
