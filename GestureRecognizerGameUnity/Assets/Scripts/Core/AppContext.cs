@@ -2,7 +2,6 @@ using Core.Api;
 using Core.Impl;
 using Logic.Commands;
 using Logic.Signals;
-using Model;
 using Model.Api;
 using Model.Impl;
 using UIView;
@@ -28,6 +27,8 @@ namespace Core
 
             injectionBinder.Bind<IGestureInput>().To<GestureInputContext>().ToSingleton();
             injectionBinder.Bind<IGameFlowModel>().To<GameFlowModel>().ToSingleton();
+            injectionBinder.Bind<IGestureTemplatesModel>().To<GestureTemplatesModel>();
+            injectionBinder.Bind<IPlaySessionModel>().To<PlaySessionModel>();
 
             mediationBinder.Bind<DebugStatusBarView>().To<DebugStatusBarMediator>();
 
