@@ -1,5 +1,7 @@
 using Core.Api;
 using Core.Impl;
+using Helpers.Api;
+using Helpers.Impl;
 using Logic.Commands;
 using Logic.Signals;
 using Model.Api;
@@ -27,11 +29,15 @@ namespace Core
         {
             base.mapBindings();
 
+            // helpers
+            injectionBinder.Bind<ICoroutineWorker>().To<CoroutineWorker>().ToSingleton();
+            injectionBinder.Bind<IGestureRecognizer>().To<GestureRecognizer>().ToSingleton();
+
             // model layer
             injectionBinder.Bind<IGestureInput>().To<GestureInputContext>().ToSingleton();
             injectionBinder.Bind<IGameFlowModel>().To<GameFlowModel>().ToSingleton();
-            injectionBinder.Bind<IGestureTemplatesModel>().To<GestureTemplatesModel>();
-            injectionBinder.Bind<IGamePlayModel>().To<GamePlayModel>();
+            injectionBinder.Bind<IGestureTemplatesModel>().To<GestureTemplatesModel>().ToSingleton();
+            injectionBinder.Bind<IGamePlayModel>().To<GamePlayModel>().ToSingleton();
 
             // view layer
             mediationBinder.Bind<MainMenuWindow>().To<MainMenuWindowMediator>();
@@ -44,6 +50,7 @@ namespace Core
 
             commandBinder.Bind<ChangeGameFlowStateSignal>().To<ChangeGameFlowStateCommand>();
             commandBinder.Bind<RestartGamePlaySignal>().To<RestartGamePlayCommand>();
+            commandBinder.Bind<InitGamePlaySignal>().To<InitGamePlayCommand>();
 
             commandBinder.Bind<GestureStartSignal>().To<GestureStartCommand>();
             commandBinder.Bind<GestureEndSignal>().To<GestureEndCommand>();

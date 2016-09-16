@@ -22,4 +22,6 @@ namespace Logic.Signals
     public class ChangeGameFlowStateSignal : Signal<GameStates> { }
 
     public class RestartGamePlaySignal : Signal { }
+
+    public class InitGamePlaySignal : Signal { }
 }
