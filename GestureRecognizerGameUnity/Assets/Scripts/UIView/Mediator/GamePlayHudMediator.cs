@@ -12,7 +12,7 @@ namespace UIView.Mediator
         public IGameFlowModel GameFlow { get; private set; }
 
         [Inject]
-        public IPlaySessionModel Session { get; private set; }
+        public IGamePlayModel Session { get; private set; }
 
         [Inject]
         public ChangeGameFlowStateSignal ChangeGameFlowStateSignal { get; private set; }

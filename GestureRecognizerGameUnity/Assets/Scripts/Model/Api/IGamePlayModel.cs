@@ -3,7 +3,7 @@ using Helpers;
 
 namespace Model.Api
 {
-    public interface IPlaySessionModel
+    public interface IGamePlayModel
     {
         HandledProperty<int> Score { get; }
         HandledProperty<int> Stage { get; }

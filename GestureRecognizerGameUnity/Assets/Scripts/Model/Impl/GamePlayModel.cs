@@ -4,13 +4,13 @@ using Model.Api;
 
 namespace Model.Impl
 {
-    public class PlaySessionModel : IPlaySessionModel
+    public class GamePlayModel : IGamePlayModel
     {
         public HandledProperty<int> Score { get; private set; }
         public HandledProperty<int> Stage { get; private set; }
         public HandledProperty<TimeSpan> Time { get; private set; }
 
-        public PlaySessionModel()
+        public GamePlayModel()
         {
             Score = new HandledProperty<int>(0);
             Stage = new HandledProperty<int>(0);

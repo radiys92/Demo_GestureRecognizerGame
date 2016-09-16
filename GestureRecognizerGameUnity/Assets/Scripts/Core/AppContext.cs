@@ -31,7 +31,7 @@ namespace Core
             injectionBinder.Bind<IGestureInput>().To<GestureInputContext>().ToSingleton();
             injectionBinder.Bind<IGameFlowModel>().To<GameFlowModel>().ToSingleton();
             injectionBinder.Bind<IGestureTemplatesModel>().To<GestureTemplatesModel>();
-            injectionBinder.Bind<IPlaySessionModel>().To<PlaySessionModel>();
+            injectionBinder.Bind<IGamePlayModel>().To<GamePlayModel>();
 
             // view layer
             mediationBinder.Bind<MainMenuWindow>().To<MainMenuWindowMediator>();
