@@ -19,26 +19,23 @@ namespace UIView.Windows
 
         public int Score
         {
-            set { ScoreTxt.text = string.Format("Score: {0}", value); }
+            set { ScoreTxt.text = $"Score: {value}"; }
         }
 
         public TimeSpan Time
         {
-            set
-            {
-                TimeTxt.text = string.Format("{0}:{1}", (int) value.TotalMinutes, value.Seconds);
-            }
+            set { TimeTxt.text = $"{(int) value.TotalMinutes}:{value.Seconds}"; }
         }
 
         public int Stage
         {
             set
             {
-                ScoreTxt.gameObject.SetActive(value>0);
-                PauseBtn.gameObject.SetActive(value>0);
-                StageTxt.gameObject.SetActive(value>0);
+                ScoreTxt.gameObject.SetActive(value > 0);
+                PauseBtn.gameObject.SetActive(value > 0);
+                StageTxt.gameObject.SetActive(value > 0);
                 TimeTxt.gameObject.SetActive(value > 0);
-                StageTxt.text = string.Format("Stage: {0}", value);
+                StageTxt.text = $"Stage: {value}";
             }
         }
 
@@ -46,7 +43,7 @@ namespace UIView.Windows
         {
             set
             {
-                InitCounterTxt.gameObject.SetActive(value>0);
+                InitCounterTxt.gameObject.SetActive(value > 0);
                 InitCounterTxt.text = value.ToString();
             }
         }

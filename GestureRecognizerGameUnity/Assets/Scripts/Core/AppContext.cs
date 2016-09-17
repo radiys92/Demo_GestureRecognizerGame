@@ -65,8 +65,8 @@ namespace Core
 
         private ICoroutineWorker GetCoroutiner()
         {
-            GameObject go = new GameObject("~Coroutiner");
-            GameObject.DontDestroyOnLoad(go);
+            var go = new GameObject("~Coroutiner");
+            Object.DontDestroyOnLoad(go);
             return go.AddComponent<CoroutineWorker>();
         }
     }
