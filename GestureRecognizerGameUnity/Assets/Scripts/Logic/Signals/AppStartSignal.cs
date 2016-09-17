@@ -1,4 +1,5 @@
 using GCon;
+using Model.Api;
 using Model.Impl;
 using strange.extensions.signal.impl;
 
@@ -24,4 +25,6 @@ namespace Logic.Signals
     public class RestartGamePlaySignal : Signal { }
 
     public class InitGamePlaySignal : Signal { }
+
+    public class ChangeGamePlayStateSignal: Signal<GamePlayState> { }
 }

@@ -5,6 +5,7 @@ namespace Model.Api
 {
     public enum GamePlayState
     {
+        None,
         Init,
         StageStaring,
         ShowTemplateGesture,

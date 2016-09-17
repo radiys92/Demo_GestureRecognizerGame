@@ -51,6 +51,7 @@ namespace Core
             commandBinder.Bind<ChangeGameFlowStateSignal>().To<ChangeGameFlowStateCommand>();
             commandBinder.Bind<RestartGamePlaySignal>().To<RestartGamePlayCommand>();
             commandBinder.Bind<InitGamePlaySignal>().To<InitGamePlayCommand>();
+            commandBinder.Bind<ChangeGamePlayStateSignal>().To<ChangeGamePlayStateCommand>();
 
             commandBinder.Bind<GestureStartSignal>().To<GestureStartCommand>();
             commandBinder.Bind<GestureEndSignal>().To<GestureEndCommand>();
