@@ -10,5 +10,6 @@ namespace Model.Impl
         public HandledProperty<int> Score { get; } = new HandledProperty<int>(0);
         public HandledProperty<int> Stage { get; } = new HandledProperty<int>(0);
         public HandledProperty<TimeSpan> Time { get; } = new HandledProperty<TimeSpan>(TimeSpan.FromSeconds(0));
+        public HandledProperty<TimeSpan> InitCooldownTime { get; } = new HandledProperty<TimeSpan>(TimeSpan.FromSeconds(-1));
     }
 }

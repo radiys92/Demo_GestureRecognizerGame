@@ -10,6 +10,7 @@ namespace UIView.Windows
         public Text ScoreTxt;
         public Text TimeTxt;
         public Text StageTxt;
+        public Text InitCounterTxt;
 
         public UnityEvent OnPauseBtnClick
         {
@@ -23,12 +24,31 @@ namespace UIView.Windows
 
         public TimeSpan Time
         {
-            set { TimeTxt.text = string.Format("{0}:{1}", (int) value.TotalMinutes, value.Seconds); }
+            set
+            {
+                TimeTxt.text = string.Format("{0}:{1}", (int) value.TotalMinutes, value.Seconds);
+            }
         }
 
         public int Stage
         {
-            set { StageTxt.text = string.Format("Stage: {0}", value); }
+            set
+            {
+                ScoreTxt.gameObject.SetActive(value>0);
+                PauseBtn.gameObject.SetActive(value>0);
+                StageTxt.gameObject.SetActive(value>0);
+                TimeTxt.gameObject.SetActive(value > 0);
+                StageTxt.text = string.Format("Stage: {0}", value);
+            }
+        }
+
+        public int InitCounter
+        {
+            set
+            {
+                InitCounterTxt.gameObject.SetActive(value>0);
+                InitCounterTxt.text = value.ToString();
+            }
         }
     }
 }

@@ -23,6 +23,7 @@ namespace UIView.Mediator
             Session.Score.OnPropertyUpdated -= OnScoreChanged;
             Session.Stage.OnPropertyUpdated -= OnStageChanged;
             Session.Time.OnPropertyUpdated -= OnTimerChanged;
+            Session.InitCooldownTime.OnPropertyUpdated -= OnGamePlayStateChanged;
             View.OnShow.RemoveAllListeners();
             View.OnPauseBtnClick.RemoveAllListeners();
         }
@@ -33,8 +34,14 @@ namespace UIView.Mediator
             Session.Score.OnPropertyUpdated += OnScoreChanged;
             Session.Stage.OnPropertyUpdated += OnStageChanged;
             Session.Time.OnPropertyUpdated += OnTimerChanged;
+            Session.InitCooldownTime.OnPropertyUpdated += OnGamePlayStateChanged;
             View.OnShow.AddListener(OnShow);
             View.OnPauseBtnClick.AddListener(OnPause);
+        }
+
+        private void OnGamePlayStateChanged(TimeSpan obj)
+        {
+            View.InitCounter = (int) obj.TotalSeconds;
         }
 
         private void OnPause()

@@ -30,7 +30,7 @@ namespace Core
             base.mapBindings();
 
             // helpers
-            injectionBinder.Bind<ICoroutineWorker>().To<CoroutineWorker>().ToSingleton();
+            injectionBinder.Bind<ICoroutineWorker>().To(GetCoroutiner()).ToSingleton();
             injectionBinder.Bind<IGestureRecognizer>().To<GestureRecognizer>().ToSingleton();
 
             // model layer
@@ -61,6 +61,13 @@ namespace Core
             commandBinder.Bind<GestureRendererUpdateSignal>().To<UpdateGestureRendererCommand>();
 
             Debug.Log("Bind finished");
+        }
+
+        private ICoroutineWorker GetCoroutiner()
+        {
+            GameObject go = new GameObject("~Coroutiner");
+            GameObject.DontDestroyOnLoad(go);
+            return go.AddComponent<CoroutineWorker>();
         }
     }
 }

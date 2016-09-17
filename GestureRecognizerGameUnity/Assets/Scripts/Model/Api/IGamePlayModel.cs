@@ -7,7 +7,7 @@ namespace Model.Api
     {
         None,
         Init,
-        StageStaring,
+        StageStarting,
         ShowTemplateGesture,
         UserGestureInput,
         GesturesCompare,
@@ -21,5 +21,6 @@ namespace Model.Api
         HandledProperty<int> Score { get; }
         HandledProperty<int> Stage { get; }
         HandledProperty<TimeSpan> Time { get; }
+        HandledProperty<TimeSpan> InitCooldownTime { get; }
     }
 }
