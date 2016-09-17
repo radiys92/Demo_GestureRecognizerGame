@@ -48,6 +48,10 @@ namespace Logic.Commands
                     CoroutineWorker.StartCoroutine(InitCoroutine());
                     break;
                 case GamePlayState.StageStarting:
+                    var stage = GamePlay.Stage.Value <= 0
+                        ? 1
+                        : GamePlay.Stage.Value + 1;
+                    CoroutineWorker.StartCoroutine(StageStartCoroutine(stage));
                     break;
                 case GamePlayState.ShowTemplateGesture:
                     break;
@@ -64,6 +68,13 @@ namespace Logic.Commands
             }
         }
 
+        private IEnumerator StageStartCoroutine(int stage)
+        {
+            GamePlay.Stage.Value = stage;
+            yield return new WaitForSeconds(2);
+            ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
+        }
+
         private IEnumerator InitCoroutine()
         {
             var secs = 3;
@@ -74,7 +85,6 @@ namespace Logic.Commands
                 secs--;
             }
             GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(-1);
-            GamePlay.Stage.Value = 1;
             ChangeGamePlayStateSignal.Dispatch(GamePlayState.StageStarting);
         }
     }
