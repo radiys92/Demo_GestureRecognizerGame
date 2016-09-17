@@ -45,8 +45,7 @@ namespace UIView.Windows
                 StageTxt.text = $"Stage: {value}";
                 if (value > 0)
                 {
-                    InitCounterTxt.text = $"Stage\n{value}";
-                    StartTextLabelBlink();
+                    BlinkText($"Stage\n{value}");
                 }
             }
         }
@@ -55,13 +54,12 @@ namespace UIView.Windows
         {
             set
             {
-                InitCounterTxt.text = value.ToString();
                 if (value > 0)
-                    StartTextLabelBlink();
+                    BlinkText(value.ToString());
             }
         }
 
-        private void StartTextLabelBlink()
+        private void BlinkText(string text)
         {
             Debug.Log("Blinking started");
             InitCounterTxt.gameObject.SetActive(true);
