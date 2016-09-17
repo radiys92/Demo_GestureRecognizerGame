@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GCon;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -9,6 +10,23 @@ namespace Helpers.Extensions
 {
     public class GestureCreatorSceneController : MonoBehaviour
     {
+        /// <summary>
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
+        /// </summary>
+
         private const string TemplatesAssetPath = "GestureTemplates";
 
         public Transform ListItem0;
@@ -50,6 +68,7 @@ namespace Helpers.Extensions
                 var l = _templates.Templates.ToList();
                 l.Add(new GestureTemplate() {points = _lastGesture});
                 _templates.Templates = l.ToArray();
+                EditorUtility.SetDirty(_templates);
                 UpdateListView();
             });
 
@@ -61,6 +80,7 @@ namespace Helpers.Extensions
                 var l = _templates.Templates.ToList();
                 l.RemoveAt(_selectedId);
                 _templates.Templates = l.ToArray();
+                EditorUtility.SetDirty(_templates);
                 UpdateListView();
             });
 
@@ -72,6 +92,7 @@ namespace Helpers.Extensions
                     return;
 
                 _templates.Templates[_selectedId].points = _lastGesture;
+                EditorUtility.SetDirty(_templates);
                 UpdateListView();
             
             });
