@@ -18,8 +18,11 @@ namespace Logic.Commands
         public IGamePlayModel GamePlay { get; private set; }
 
         [Inject]
-        public GamePlayState State { get; private set; }
+        public IGestureTemplatesModel Templates { get; private set; }
 
+        [Inject]
+        public GamePlayState State { get; private set; }
+        
         [Inject]
         public ICoroutineWorker CoroutineWorker { get; private set; }
 
@@ -51,9 +54,11 @@ namespace Logic.Commands
                     var stage = GamePlay.Stage.Value <= 0
                         ? 1
                         : GamePlay.Stage.Value + 1;
-                    CoroutineWorker.StartCoroutine(StageStartCoroutine(stage));
+                    CoroutineWorker.StartCoroutine(StartStage(stage));
                     break;
                 case GamePlayState.ShowTemplateGesture:
+                    var template = GetRandomTemplate();
+                    CoroutineWorker.StartCoroutine(DrawTemplateGestureState(template));
                     break;
                 case GamePlayState.UserGestureInput:
                     break;
@@ -68,10 +73,22 @@ namespace Logic.Commands
             }
         }
 
-        private IEnumerator StageStartCoroutine(int stage)
+        private IEnumerator DrawTemplateGestureState(Vector2[] template)
+        {
+            GamePlay.Template.Value = template;
+            yield return new WaitForSeconds(2);
+            ChangeGamePlayStateSignal.Dispatch(GamePlayState.UserGestureInput);
+        }
+
+        private Vector2[] GetRandomTemplate()
+        {
+            return Templates.GestureTemplates[UnityEngine.Random.Range(0, Templates.GestureTemplates.Count)];
+        }
+
+        private IEnumerator StartStage(int stage)
         {
             GamePlay.Stage.Value = stage;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
         }
 

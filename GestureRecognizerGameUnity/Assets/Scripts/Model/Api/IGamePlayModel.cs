@@ -1,5 +1,6 @@
 using System;
 using Helpers;
+using UnityEngine;
 
 namespace Model.Api
 {
@@ -22,5 +23,6 @@ namespace Model.Api
         HandledProperty<int> Stage { get; }
         HandledProperty<TimeSpan> Time { get; }
         HandledProperty<TimeSpan> InitCooldownTime { get; }
+        HandledProperty<Vector2[]> Template { get; }
     }
 }

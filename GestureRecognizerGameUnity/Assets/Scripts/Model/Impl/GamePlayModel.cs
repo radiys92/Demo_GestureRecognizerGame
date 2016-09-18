@@ -1,6 +1,7 @@
 using System;
 using Helpers;
 using Model.Api;
+using UnityEngine;
 
 namespace Model.Impl
 {
@@ -11,5 +12,6 @@ namespace Model.Impl
         public HandledProperty<int> Stage { get; } = new HandledProperty<int>(0);
         public HandledProperty<TimeSpan> Time { get; } = new HandledProperty<TimeSpan>(TimeSpan.FromSeconds(0));
         public HandledProperty<TimeSpan> InitCooldownTime { get; } = new HandledProperty<TimeSpan>(TimeSpan.FromSeconds(-1));
+        public HandledProperty<Vector2[]> Template { get; } = new HandledProperty<Vector2[]>(null);
     }
 }

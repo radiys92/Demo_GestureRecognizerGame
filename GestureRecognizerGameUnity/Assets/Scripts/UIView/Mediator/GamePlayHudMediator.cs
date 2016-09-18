@@ -3,6 +3,7 @@ using Logic.Signals;
 using Model.Api;
 using Model.Impl;
 using UIView.Windows;
+using UnityEngine;
 
 namespace UIView.Mediator
 {
@@ -24,6 +25,7 @@ namespace UIView.Mediator
             Session.Stage.OnPropertyUpdated -= OnStageChanged;
             Session.Time.OnPropertyUpdated -= OnTimerChanged;
             Session.InitCooldownTime.OnPropertyUpdated -= OnGamePlayStateChanged;
+            Session.Template.OnPropertyUpdated -= OnTemplateGestureChanged;
             View.OnShow.RemoveAllListeners();
             View.OnPauseBtnClick.RemoveAllListeners();
         }
@@ -35,8 +37,14 @@ namespace UIView.Mediator
             Session.Stage.OnPropertyUpdated += OnStageChanged;
             Session.Time.OnPropertyUpdated += OnTimerChanged;
             Session.InitCooldownTime.OnPropertyUpdated += OnGamePlayStateChanged;
+            Session.Template.OnPropertyUpdated += OnTemplateGestureChanged;
             View.OnShow.AddListener(OnShow);
             View.OnPauseBtnClick.AddListener(OnPause);
+        }
+
+        private void OnTemplateGestureChanged(Vector2[] obj)
+        {
+            View.TemplateGesture = obj;
         }
 
         private void OnGamePlayStateChanged(TimeSpan obj)
