@@ -34,7 +34,9 @@ namespace UIView.Windows
         {
             set
             {
-                ScoreTxt.text = $"Score: {value}"; 
+                ScoreTxt.text = $"Score: {value}";
+                if (value > 0)
+                    AnimGreenBack();
             }
         }
 
@@ -114,6 +116,11 @@ namespace UIView.Windows
         {
             Debug.Log("Blinking finished");
             InitCounterTxt.gameObject.SetActive(false);
+        }
+
+        private void AnimGreenBack()
+        {
+            _animator.SetTrigger("GreenBack");
         }
     }
 }

@@ -49,6 +49,7 @@ namespace Logic.Commands
             switch (State)
             {
                 case GamePlayState.None:
+                    StopGestureWaiter();
                     WipeSessionData();
                     break;
                 case GamePlayState.Init:
