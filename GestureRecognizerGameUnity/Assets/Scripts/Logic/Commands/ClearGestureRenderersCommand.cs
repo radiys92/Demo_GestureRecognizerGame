@@ -7,15 +7,15 @@ namespace Logic.Commands
     public class ClearGestureRenderersCommand : Command
     {
         [Inject]
-        public IGameFlowModel Model { get; private set; }
+        public IGameFlowModel GameFlow { get; private set; }
 
         public override void Execute()
         {
-            foreach (var lineRenderer in Model.LineRenderers)
+            foreach (var lineRenderer in GameFlow.LineRenderers)
             {
                 Object.Destroy(lineRenderer.gameObject);
             }
-            Model.LineRenderers.Clear();
+            GameFlow.LineRenderers.Clear();
         }
     }
 }

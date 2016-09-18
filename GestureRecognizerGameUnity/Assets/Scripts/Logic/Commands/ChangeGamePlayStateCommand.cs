@@ -32,11 +32,14 @@ namespace Logic.Commands
         [Inject]
         public ChangeGamePlayStateSignal ChangeGamePlayStateSignal { get; private set; }
 
-        private IEnumerator _gestureInputWaiter = null;
+        [Inject]
+        public GestureRendererClearSignal GestureRendererClearSignal { get; private set; }
+
+        private static IEnumerator _gestureInputWaiter = null;
 
         public override void Execute()
         {
-            if (GameFlow.GameState.Value != GameStates.GamePlay)
+            if (GameFlow.GameState.Value != GameStates.GamePlay && State != GamePlayState.None)
                 ChangeGameFlowStateSignal.Dispatch(GameStates.GamePlay);
 
             GamePlay.State.Value = State;
@@ -59,6 +62,7 @@ namespace Logic.Commands
 //                    CoroutineWorker.StartCoroutine(StartStage(stage));
 //                    break;
                 case GamePlayState.ShowTemplateGesture:
+                    StopGestureWaiter();
                     var template = GetRandomTemplate();
                     CoroutineWorker.StartCoroutine(DrawTemplateGestureState(template));
                     break;
@@ -70,8 +74,9 @@ namespace Logic.Commands
                 case GamePlayState.Pause:
                     break;
                 case GamePlayState.GameOver:
-                    WipeSessionData();
                     ChangeGameFlowStateSignal.Dispatch(GameStates.GameOver);
+                    GamePlay.State.Value = GamePlayState.None;
+                    GestureRendererClearSignal.Dispatch();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

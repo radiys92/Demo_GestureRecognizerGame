@@ -13,10 +13,21 @@ namespace Helpers.Impl
         int compareDetail = 15; // Number of matching iterations (CPU consuming) 
         int angleRange = 45; // Angle detail level of when matching with templates 
 
-        public float Compare(Gesture a, Gesture b, int maxPoints)
+        public float Compare(Gesture gesture1, Gesture gesture2, int maxPoints)
         {
-            var p1 = a.Frames.Select(i => i.position).ToList();
-            var p2 = b.Frames.Select(i => i.position).ToList();
+            var p1 = gesture1.Frames.Select(i => i.position).ToList();
+            var p2 = gesture2.Frames.Select(i => i.position).ToList();
+
+            p1 = NormalizePoints(p1, maxPoints);
+            p2 = NormalizePoints(p2, maxPoints);
+
+            return GestureMatch(p1, p2);
+        }
+
+        public float Compare(Vector2[] gesture1Points, Gesture gesture2, int maxPoints)
+        {
+            var p1 = gesture1Points.ToList();
+            var p2 = gesture2.Frames.Select(i => i.position).ToList();
 
             p1 = NormalizePoints(p1, maxPoints);
             p2 = NormalizePoints(p2, maxPoints);
