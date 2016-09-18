@@ -15,7 +15,7 @@ namespace UIView.Windows
         public Text TimeTxt;
         public Text StageTxt;
         public Text InitCounterTxt;
-        public RectTransform ContentRect;
+        public RectTransform GestureRendererRect;
         public LineRenderer GestureRenderer;
         public Canvas MyCanvas;
 
@@ -72,7 +72,7 @@ namespace UIView.Windows
 
         private void DrawTemplate(Vector2[] gesturePoints)
         {
-            var points = NormalizeToRect(ContentRect, gesturePoints);
+            var points = NormalizeToRect(GestureRendererRect, gesturePoints);
             var worldPoints = ScreenToWorldPoints(points);
 //            var worldPoints = ScreenToWorldPoints(gesturePoints);
             StartCoroutine(DrawPoints(worldPoints, 1, 1));
@@ -98,7 +98,7 @@ namespace UIView.Windows
             }
             SetPoints(GestureRenderer, points, 0, points.Length);
             yield return new WaitForSeconds(hideTime);
-            GestureRenderer.SetVertexCount(0);
+//            GestureRenderer.SetVertexCount(0);
         }
 
         private void SetPoints(LineRenderer lineRenderer, Vector3[] points, int start, int count)
@@ -111,26 +111,95 @@ namespace UIView.Windows
         {
             // some magic here
             var rect = RectTransformToScreenSpace(contentRect, MyCanvas);
-            rect.xMin += 50;
-            rect.xMax -= 50;
-            rect.yMin += 50;
-            rect.yMax -= 50;
-            var left = points.Min(i => i.x);
-            var right = points.Max(i => i.x);
-            var bot = points.Min(i => i.y);
-            var top = points.Max(i => i.y);
+//            rect.xMin += 50;
+//            rect.xMax -= 50;
+//            rect.yMin += 50;
+//            rect.yMax -= 50;
+            var left = float.MaxValue;
+            var right = float.MinValue;
+            var bot = float.MaxValue;
+            var top = float.MinValue;
+            for (var i = 0; i < points.Length; i++)
+            {
+                if (points[i].x <= left) left = points[i].x;
+                if (points[i].x >= right) right = points[i].x;
+                if (points[i].y <= bot) bot = points[i].y;
+                if (points[i].y >= top) top = points[i].y;
+            }
+            var topLeft = new Vector2(left, top);
             var h = top - bot;
             var w = right - left;
-            var offset = new Vector2(Screen.width / 2 - left, Screen.height / 2 - bot);
-            var scale = new Vector2(rect.width / w, rect.height / h);
-            return
-                points.Select(
-                    i => new Vector2()
-                    {
-                        x =  (i.x - left)*scale.x,
-                        y = offset.y + (i.y - bot)*scale.y
-                    })
+            var offset = Vector2.zero;
+            var scale = 0f;
+            var scaleW = rect.width/w;
+            var scaleH = rect.height/h;
+            if (scaleH < scaleW)
+            {
+//                Debug.Log("vertical figures");
+                scale = scaleH;
+                offset.y = rect.height;
+                offset.x = rect.width/2 - w;
+            }
+            else
+            {
+//                Debug.Log("horizontal figures");
+                scale = scaleW;
+                offset.y = rect.height/2+h/2;
+//                offset.x = 0;
+
+            }
+            var res = points.Select(
+                i =>
+                {
+                    var v = i - topLeft;
+                    v *= scale;
+                    v += offset;
+
+                    v.y += rect.yMin;
+
+                    return v;
+
+                })
                     .ToArray();
+
+//            Debug.LogFormat("Offset = {0}", offset);
+//            Debug.LogFormat("{0}\n{1}\n{2}\n{3}",left,right,bot,top);
+////            var res = points.Select(i => Vector2.zero).ToArray();
+//
+//            var start = ScreenToWorldPoints(points);
+//            var fin = ScreenToWorldPoints(res);
+//            for (var i = 0; i < start.Length; i++)
+//            {
+//                if (i > 0)
+//                {
+//                    Debug.DrawLine(start[i-1],start[i], Color.green);
+//                    Debug.DrawLine(fin[i-1],fin[i], Color.green);
+//                }
+//                Debug.DrawLine(start[i],fin[i], Color.cyan);
+//            }
+//
+//            var startCorners = ScreenToWorldPoints(new[] {rect.min, rect.max});
+//            var lt = new Vector2(startCorners[0].x, startCorners[1].y);
+//            var lb = new Vector2(startCorners[0].x, startCorners[0].y);
+//            var rt = new Vector2(startCorners[1].x, startCorners[1].y);
+//            var rb = new Vector2(startCorners[1].x, startCorners[0].y);
+//            Debug.DrawLine(lt, lb, Color.red);
+//            Debug.DrawLine(lt, rt, Color.red);
+//            Debug.DrawLine(rt, rb, Color.red);
+//            Debug.DrawLine(lb, rb, Color.red);
+//            var finCorners = ScreenToWorldPoints(new[] {new Vector2(left, top), new Vector2(right, bot) });
+//            lt = new Vector2(finCorners[0].x, finCorners[1].y);
+//            lb = new Vector2(finCorners[0].x, finCorners[0].y);
+//            rt = new Vector2(finCorners[1].x, finCorners[1].y);
+//            rb = new Vector2(finCorners[1].x, finCorners[0].y);
+//            Debug.DrawLine(lt, lb, Color.gray);
+//            Debug.DrawLine(lt, rt, Color.gray);
+//            Debug.DrawLine(rt, rb, Color.gray);
+//            Debug.DrawLine(lb, rb, Color.gray);
+//            Debug.Break();
+
+            return res;
+
         }
 
         private static Rect RectTransformToScreenSpace(RectTransform rectTransform, Canvas canvas)

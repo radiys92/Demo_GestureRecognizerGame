@@ -83,6 +83,7 @@ namespace Logic.Commands
         private Vector2[] GetRandomTemplate()
         {
             return Templates.GestureTemplates[UnityEngine.Random.Range(0, Templates.GestureTemplates.Count)];
+//            return Templates.GestureTemplates[0];
         }
 
         private IEnumerator StartStage(int stage)
