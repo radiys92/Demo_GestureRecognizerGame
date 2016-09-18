@@ -9,9 +9,9 @@ namespace Helpers.Impl
     public class GestureRecognizer : IGestureRecognizer
     {
         // recognizer settings
-        int sizeOfScaleRect = 500; // the size of the bounding box
-        int compareDetail = 15; // Number of matching iterations (CPU consuming) 
-        int angleRange = 45; // Angle detail level of when matching with templates 
+        private const int SizeOfScaleRect = 500; // the size of the bounding box
+        private const int CompareDetail = 2; // Number of matching iterations (CPU consuming) 
+        private const int AngleRange = 0; // Angle detail level of when matching with templates 
 
         public float Compare(Gesture gesture1, Gesture gesture2, int maxPoints)
         {
@@ -38,11 +38,11 @@ namespace Helpers.Impl
         private List<Vector2> NormalizePoints(List<Vector2> points, int maxPoints)
         {
             points = OptimizeGesture(points, maxPoints);
-            var center = CalcCenterOfGesture(points);
-            var v = points[0];
-            var radians = Mathf.Atan2(center.y - v.y, center.x - v.x);
-            points = RotateGesture(points, -radians, center);
-            points = ScaleGesture(points, sizeOfScaleRect);
+//            var center = CalcCenterOfGesture(points);
+//            var v = points[0];
+//            var radians = Mathf.Atan2(center.y - v.y, center.x - v.x);
+//            points = RotateGesture(points, -radians, center);
+            points = ScaleGesture(points, SizeOfScaleRect);
             points = TranslateGestureToOrigin(points);
             return points;
         }
@@ -154,14 +154,14 @@ namespace Helpers.Impl
         {
             var tempDistance = Mathf.Infinity;
 
-            var distance = CalcDistanceAtOptimalAngle(pointArray, p2, -angleRange, angleRange);
+            var distance = CalcDistanceAtOptimalAngle(pointArray, p2, -AngleRange, AngleRange);
 
             if (distance < tempDistance)
             {
                 tempDistance = distance;
             }
 
-            var halfDiagonal = 0.5f*Mathf.Sqrt(Mathf.Pow(sizeOfScaleRect, 2) + Mathf.Pow(sizeOfScaleRect, 2));
+            var halfDiagonal = 0.5f*Mathf.Sqrt(Mathf.Pow(SizeOfScaleRect, 2) + Mathf.Pow(SizeOfScaleRect, 2));
             var score = 1.0f - (tempDistance/halfDiagonal);
 
             return score;
@@ -220,8 +220,8 @@ namespace Helpers.Impl
             var radian2 = (1.0f - Mathf.PI)*negativeAngle + Mathf.PI*positiveAngle;
             var tempDistance2 = CalcDistanceAtAngle(pointArray, template, radian2);
 
-            // the higher the number compareDetail is, the better recognition this system will perform. 
-            for (var i = 0; i < compareDetail; ++i)
+            // the higher the number CompareDetail is, the better recognition this system will perform. 
+            for (var i = 0; i < CompareDetail; ++i)
             {
                 if (tempDistance1 < tempDistance2)
                 {

@@ -6,6 +6,7 @@ using Logic.Signals;
 using Model.Api;
 using Model.Impl;
 using strange.extensions.command.impl;
+using UnityEngine;
 
 namespace Logic.Commands
 {
@@ -36,8 +37,9 @@ namespace Logic.Commands
             if (GamePlay.State.Value != GamePlayState.UserGestureInput)
                 return;
 
-            var comparationRate = GestureRecognizer.Compare(GamePlay.Template.Value, Gesture, 64);
-            if (comparationRate > 0.8f)
+            var comparationScore = GestureRecognizer.Compare(GamePlay.Template.Value, Gesture, 64);
+            Debug.LogFormat("Gesture compared, comparation score: {0}",comparationScore);
+            if (comparationScore > 0.8f)
             {
                 GamePlay.Score.Value++;
                 ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
