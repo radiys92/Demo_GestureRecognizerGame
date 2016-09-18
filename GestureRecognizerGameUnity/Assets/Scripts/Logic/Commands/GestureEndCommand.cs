@@ -42,6 +42,10 @@ namespace Logic.Commands
                 GamePlay.Score.Value++;
                 ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
             }
+            else
+            {
+                GamePlay.Fails.Value++;
+            }
 
             //            switch (GameFlow.GameState.Value)
             //            {

@@ -26,6 +26,7 @@ namespace UIView.Mediator
             Session.Time.OnPropertyUpdated -= OnTimerChanged;
             Session.InitCooldownTime.OnPropertyUpdated -= OnGamePlayStateChanged;
             Session.Template.OnPropertyUpdated -= OnTemplateGestureChanged;
+            Session.Fails.OnPropertyUpdated -= OnFailedCountChanged;
             View.OnShow.RemoveAllListeners();
             View.OnPauseBtnClick.RemoveAllListeners();
         }
@@ -38,8 +39,14 @@ namespace UIView.Mediator
             Session.Time.OnPropertyUpdated += OnTimerChanged;
             Session.InitCooldownTime.OnPropertyUpdated += OnGamePlayStateChanged;
             Session.Template.OnPropertyUpdated += OnTemplateGestureChanged;
+            Session.Fails.OnPropertyUpdated += OnFailedCountChanged;
             View.OnShow.AddListener(OnShow);
             View.OnPauseBtnClick.AddListener(OnPause);
+        }
+
+        private void OnFailedCountChanged(int obj)
+        {
+            View.AnimRedBack();
         }
 
         private void OnTemplateGestureChanged(Vector2[] obj)

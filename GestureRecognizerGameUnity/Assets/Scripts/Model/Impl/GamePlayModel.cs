@@ -14,5 +14,6 @@ namespace Model.Impl
         public HandledProperty<TimeSpan> InitCooldownTime { get; } = new HandledProperty<TimeSpan>(TimeSpan.FromSeconds(-1));
         public HandledProperty<Vector2[]> Template { get; } = new HandledProperty<Vector2[]>(null);
         public HandledProperty<float> CurrentCooldown { get; } = new HandledProperty<float>(-1);
+        public HandledProperty<int> Fails { get; } = new HandledProperty<int>(0);
     }
 }

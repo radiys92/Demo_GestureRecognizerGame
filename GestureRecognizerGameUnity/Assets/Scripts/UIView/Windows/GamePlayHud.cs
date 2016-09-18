@@ -118,9 +118,14 @@ namespace UIView.Windows
             InitCounterTxt.gameObject.SetActive(false);
         }
 
-        private void AnimGreenBack()
+        public void AnimGreenBack()
         {
             _animator.SetTrigger("GreenBack");
+        }
+
+        public void AnimRedBack()
+        {
+            _animator.SetTrigger("RedBack");
         }
     }
 }
