@@ -22,12 +22,12 @@ namespace Logic.Commands
 
         [Inject]
         public GamePlayState State { get; private set; }
-        
+
         [Inject]
         public ICoroutineWorker CoroutineWorker { get; private set; }
 
         [Inject]
-        public ChangeGameFlowStateSignal ChangeGameFlowStateSignal { get; private set; } 
+        public ChangeGameFlowStateSignal ChangeGameFlowStateSignal { get; private set; }
 
         [Inject]
         public ChangeGamePlayStateSignal ChangeGamePlayStateSignal { get; private set; }
@@ -45,17 +45,17 @@ namespace Logic.Commands
             {
                 case GamePlayState.None:
                     GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(-1);
-                    GamePlay.Stage.Value = -1;
+//                    GamePlay.Stage.Value = -1;
                     break;
                 case GamePlayState.Init:
                     CoroutineWorker.StartCoroutine(InitCoroutine());
                     break;
-                case GamePlayState.StageStarting:
-                    var stage = GamePlay.Stage.Value <= 0
-                        ? 1
-                        : GamePlay.Stage.Value + 1;
-                    CoroutineWorker.StartCoroutine(StartStage(stage));
-                    break;
+//                case GamePlayState.StageStarting:
+//                    var stage = GamePlay.Stage.Value <= 0
+//                        ? 1
+//                        : GamePlay.Stage.Value + 1;
+//                    CoroutineWorker.StartCoroutine(StartStage(stage));
+//                    break;
                 case GamePlayState.ShowTemplateGesture:
                     var template = GetRandomTemplate();
                     CoroutineWorker.StartCoroutine(DrawTemplateGestureState(template));
@@ -86,24 +86,25 @@ namespace Logic.Commands
 //            return Templates.GestureTemplates[0];
         }
 
-        private IEnumerator StartStage(int stage)
-        {
-            GamePlay.Stage.Value = stage;
-            yield return new WaitForSeconds(1);
-            ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
-        }
+//        private IEnumerator StartStage(int stage)
+//        {
+//            GamePlay.Stage.Value = stage;
+//            yield return new WaitForSeconds(1);
+//            ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
+//        }
 
         private IEnumerator InitCoroutine()
         {
             var secs = 3;
-            while (secs>0)
+            while (secs > 0)
             {
                 GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(secs);
                 yield return new WaitForSeconds(1);
                 secs--;
             }
             GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(-1);
-            ChangeGamePlayStateSignal.Dispatch(GamePlayState.StageStarting);
+            //            ChangeGamePlayStateSignal.Dispatch(GamePlayState.StageStarting);
+            ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
         }
     }
 }

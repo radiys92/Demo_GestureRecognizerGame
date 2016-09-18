@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Helpers;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,7 +32,10 @@ namespace UIView.Windows
 
         public int Score
         {
-            set { ScoreTxt.text = $"Score: {value}"; }
+            set
+            {
+                ScoreTxt.text = $"Score: {value}"; 
+            }
         }
 
         public TimeSpan Time
@@ -41,21 +43,21 @@ namespace UIView.Windows
             set { TimeTxt.text = $"{(int) value.TotalMinutes}:{value.Seconds}"; }
         }
 
-        public int Stage
-        {
-            set
-            {
-                ScoreTxt.gameObject.SetActive(value > 0);
-                PauseBtn.gameObject.SetActive(value > 0);
-                TimeTxt.gameObject.SetActive(value > 0);
-                StageTxt.gameObject.SetActive(value > 0);
-                StageTxt.text = $"Stage: {value}";
-                if (value > 0)
-                {
-                    BlinkText($"Stage\n{value}");
-                }
-            }
-        }
+//        public int Stage
+//        {
+//            set
+//            {
+//                ScoreTxt.gameObject.SetActive(value > 0);
+//                PauseBtn.gameObject.SetActive(value > 0);
+//                TimeTxt.gameObject.SetActive(value > 0);
+//                StageTxt.gameObject.SetActive(value > 0);
+//                StageTxt.text = $"Stage: {value}";
+//                if (value > 0)
+//                {
+//                    BlinkText($"Stage\n{value}");
+//                }
+//            }
+//        }
 
         public int InitCounter
         {

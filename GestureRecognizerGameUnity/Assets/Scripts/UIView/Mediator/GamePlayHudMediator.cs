@@ -22,7 +22,7 @@ namespace UIView.Mediator
         {
             GameFlow.GameState.OnPropertyUpdated -= OnGameStateChanged;
             Session.Score.OnPropertyUpdated -= OnScoreChanged;
-            Session.Stage.OnPropertyUpdated -= OnStageChanged;
+//            Session.Stage.OnPropertyUpdated -= OnStageChanged;
             Session.Time.OnPropertyUpdated -= OnTimerChanged;
             Session.InitCooldownTime.OnPropertyUpdated -= OnGamePlayStateChanged;
             Session.Template.OnPropertyUpdated -= OnTemplateGestureChanged;
@@ -34,7 +34,7 @@ namespace UIView.Mediator
         {
             GameFlow.GameState.OnPropertyUpdated += OnGameStateChanged;
             Session.Score.OnPropertyUpdated += OnScoreChanged;
-            Session.Stage.OnPropertyUpdated += OnStageChanged;
+//            Session.Stage.OnPropertyUpdated += OnStageChanged;
             Session.Time.OnPropertyUpdated += OnTimerChanged;
             Session.InitCooldownTime.OnPropertyUpdated += OnGamePlayStateChanged;
             Session.Template.OnPropertyUpdated += OnTemplateGestureChanged;
@@ -62,10 +62,10 @@ namespace UIView.Mediator
             View.Time = obj;
         }
 
-        private void OnStageChanged(int obj)
-        {
-            View.Stage = obj;
-        }
+//        private void OnStageChanged(int obj)
+//        {
+//            View.Stage = obj;
+//        }
 
         private void OnScoreChanged(int obj)
         {
@@ -75,7 +75,7 @@ namespace UIView.Mediator
         private void OnShow()
         {
             View.Score = Session.Score.Value;
-            View.Stage = Session.Stage.Value;
+//            View.Stage = Session.Stage.Value;
             View.Time = Session.Time.Value;
         }
 
