@@ -42,6 +42,7 @@ namespace Logic.Commands
             if (comparationScore > 0.8f)
             {
                 GamePlay.Score.Value++;
+                GamePlay.CurrentCooldown.Value *= .95f;
                 ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
             }
             else

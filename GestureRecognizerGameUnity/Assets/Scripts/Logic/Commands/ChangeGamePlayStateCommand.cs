@@ -73,6 +73,7 @@ namespace Logic.Commands
 //                case GamePlayState.GesturesCompare:
 //                    break;
                 case GamePlayState.Pause:
+                    Time.timeScale = 0;
                     break;
                 case GamePlayState.GameOver:
                     ChangeGameFlowStateSignal.Dispatch(GameStates.GameOver);
@@ -86,10 +87,11 @@ namespace Logic.Commands
 
         private void WipeSessionData()
         {
-            GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(-1);
+            Time.timeScale = 1;
+            GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(0);
             GamePlay.Score.Value = 0;
             GamePlay.Time.Value = TimeSpan.FromSeconds(0);
-            GamePlay.CurrentCooldown.Value = 5;
+            GamePlay.CurrentCooldown.Value = 10;
             //                    GamePlay.Stage.Value = -1;
         }
 

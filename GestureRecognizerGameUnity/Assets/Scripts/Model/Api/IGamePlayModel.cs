@@ -11,7 +11,7 @@ namespace Model.Api
 //        StageStarting,
         ShowTemplateGesture,
         UserGestureInput,
-        GesturesCompare,
+//        GesturesCompare,
         Pause,
         GameOver
     }
