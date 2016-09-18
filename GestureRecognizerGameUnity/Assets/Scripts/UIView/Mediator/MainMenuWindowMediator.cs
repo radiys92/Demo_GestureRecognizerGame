@@ -14,6 +14,9 @@ namespace UIView.Mediator
         [Inject]
         public ChangeGameFlowStateSignal ChangeGameFlowStateSignal { get; private set; }
 
+        [Inject]
+        public InitGamePlaySignal InitGamePlaySignal { get; private set; }
+
         public override void OnRegister()
         {
             GameFlowModel.GameState.OnPropertyUpdated += OnGameStateUpdated;
@@ -33,6 +36,7 @@ namespace UIView.Mediator
         private void OnStartGame()
         {
             ChangeGameFlowStateSignal.Dispatch(GameStates.GamePlay);
+            InitGamePlaySignal.Dispatch();
         }
     }
 }

@@ -3,6 +3,7 @@ using Logic.Signals;
 using Model.Api;
 using Model.Impl;
 using UIView.Windows;
+using UnityEngine;
 
 namespace UIView.Mediator
 {
@@ -12,7 +13,7 @@ namespace UIView.Mediator
         public IGameFlowModel GameFlow { get; private set; }
 
         [Inject]
-        public IPlaySessionModel Session { get; private set; }
+        public IGamePlayModel Session { get; private set; }
 
         [Inject]
         public ChangeGameFlowStateSignal ChangeGameFlowStateSignal { get; private set; }
@@ -21,8 +22,11 @@ namespace UIView.Mediator
         {
             GameFlow.GameState.OnPropertyUpdated -= OnGameStateChanged;
             Session.Score.OnPropertyUpdated -= OnScoreChanged;
-            Session.Stage.OnPropertyUpdated -= OnStageChanged;
+//            Session.Stage.OnPropertyUpdated -= OnStageChanged;
             Session.Time.OnPropertyUpdated -= OnTimerChanged;
+            Session.InitCooldownTime.OnPropertyUpdated -= OnGamePlayStateChanged;
+            Session.Template.OnPropertyUpdated -= OnTemplateGestureChanged;
+            Session.Fails.OnPropertyUpdated -= OnFailedCountChanged;
             View.OnShow.RemoveAllListeners();
             View.OnPauseBtnClick.RemoveAllListeners();
         }
@@ -31,10 +35,28 @@ namespace UIView.Mediator
         {
             GameFlow.GameState.OnPropertyUpdated += OnGameStateChanged;
             Session.Score.OnPropertyUpdated += OnScoreChanged;
-            Session.Stage.OnPropertyUpdated += OnStageChanged;
+//            Session.Stage.OnPropertyUpdated += OnStageChanged;
             Session.Time.OnPropertyUpdated += OnTimerChanged;
+            Session.InitCooldownTime.OnPropertyUpdated += OnGamePlayStateChanged;
+            Session.Template.OnPropertyUpdated += OnTemplateGestureChanged;
+            Session.Fails.OnPropertyUpdated += OnFailedCountChanged;
             View.OnShow.AddListener(OnShow);
             View.OnPauseBtnClick.AddListener(OnPause);
+        }
+
+        private void OnFailedCountChanged(int obj)
+        {
+            View.AnimRedBack();
+        }
+
+        private void OnTemplateGestureChanged(Vector2[] obj)
+        {
+            View.TemplateGesture = obj;
+        }
+
+        private void OnGamePlayStateChanged(TimeSpan obj)
+        {
+            View.InitCounter = (int) obj.TotalSeconds;
         }
 
         private void OnPause()
@@ -47,10 +69,10 @@ namespace UIView.Mediator
             View.Time = obj;
         }
 
-        private void OnStageChanged(int obj)
-        {
-            View.Stage = obj;
-        }
+//        private void OnStageChanged(int obj)
+//        {
+//            View.Stage = obj;
+//        }
 
         private void OnScoreChanged(int obj)
         {
@@ -60,7 +82,7 @@ namespace UIView.Mediator
         private void OnShow()
         {
             View.Score = Session.Score.Value;
-            View.Stage = Session.Stage.Value;
+//            View.Stage = Session.Stage.Value;
             View.Time = Session.Time.Value;
         }
 

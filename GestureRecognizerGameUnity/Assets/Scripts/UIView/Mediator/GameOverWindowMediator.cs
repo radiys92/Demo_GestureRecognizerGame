@@ -11,7 +11,7 @@ namespace UIView.Mediator
         public IGameFlowModel GameFlowModel { get; private set; }
 
         [Inject]
-        public IPlaySessionModel PlaySession { get; private set; }
+        public IGamePlayModel GamePlay { get; private set; }
 
         [Inject]
         public ChangeGameFlowStateSignal ChangeGameFlowStateSignal { get; private set; }
@@ -22,7 +22,7 @@ namespace UIView.Mediator
         public override void OnRemove()
         {
             GameFlowModel.GameState.OnPropertyUpdated -= OnGameStateChanged;
-            PlaySession.Score.OnPropertyUpdated -= OnScoreChanged;
+            GamePlay.Score.OnPropertyUpdated -= OnScoreChanged;
             View.OnrestartBtnClick.RemoveAllListeners();
             View.OnGoToMainMenuBtnClick.RemoveAllListeners();
             View.OnShow.RemoveAllListeners();
@@ -31,14 +31,14 @@ namespace UIView.Mediator
         public override void OnRegister()
         {
             GameFlowModel.GameState.OnPropertyUpdated += OnGameStateChanged;
-            PlaySession.Score.OnPropertyUpdated += OnScoreChanged;
+            GamePlay.Score.OnPropertyUpdated += OnScoreChanged;
             View.OnrestartBtnClick.AddListener(Restart);
             View.OnGoToMainMenuBtnClick.AddListener(GoToMainMenu);
             View.OnShow.AddListener(OnShow);
         }
         private void OnShow()
         {
-            View.Score = PlaySession.Score.Value;
+            View.Score = GamePlay.Score.Value;
         }
 
         private void GoToMainMenu()

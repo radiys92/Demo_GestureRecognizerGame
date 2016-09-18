@@ -1,4 +1,5 @@
 using Logic.Signals;
+using Model.Api;
 using Model.Impl;
 using strange.extensions.command.impl;
 using UnityEngine;
@@ -14,6 +15,9 @@ namespace Logic.Commands
         {
             Debug.Log("App started!");
             ChangeGameFlowStateSignal.Dispatch(GameStates.MainMenu);
+
+//            injectionBinder.GetInstance<IGamePlayModel>().Stage.Value = 1;
+//            injectionBinder.GetInstance<ChangeGamePlayStateSignal>().Dispatch(GamePlayState.Init);
         }
     }
 }

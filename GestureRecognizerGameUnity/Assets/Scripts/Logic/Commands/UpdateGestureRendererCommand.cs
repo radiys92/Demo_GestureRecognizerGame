@@ -15,6 +15,9 @@ namespace Logic.Commands
 
         public override void Execute()
         {
+            if (Model.LineRenderers.Count == 0)
+                return;
+
             var lr = Model.LineRenderers[Model.LineRenderers.Count - 1];
             lr.SetVertexCount(G.FramesCount);
             var pos = Camera.main.ScreenToWorldPoint(G.EndPoint);

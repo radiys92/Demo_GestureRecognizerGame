@@ -13,7 +13,10 @@ namespace Logic.Commands
         public Gesture Gesture { get; private set; }
     
         [Inject]
-        public IGameFlowModel Model { get; private set; }
+        public IGameFlowModel GameFlow { get; private set; }
+
+        [Inject]
+        public IGamePlayModel GamePlay { get; private set; }
 
         [Inject]
         public GestureRendererUpdateSignal GestureRendererUpdateSignal { get; private set; }
@@ -24,20 +27,15 @@ namespace Logic.Commands
 
         public override void Execute()
         {
-//            Model.GameState.Value =
-//                (GameStates)
-//                    (((int) Model.GameState.Value + 1)%Enum.GetNames(typeof (GameStates)).Length);
-//
-//            if (Model.GameState.Value == GameStates.DrawLine1 ||
-//                Model.GameState.Value == GameStates.DrawLine2)
-//            {
-//                GestureRendererCreateSignal.Dispatch(Gesture);
-//
-//                Gesture.OnGestureStay += g =>
-//                {
-//                    GestureRendererUpdateSignal.Dispatch(Gesture);
-//                };
-//            }
+            if (GamePlay.State.Value != GamePlayState.UserGestureInput)
+                return;
+
+            GestureRendererCreateSignal.Dispatch(Gesture);
+
+            Gesture.OnGestureStay += g =>
+            {
+                GestureRendererUpdateSignal.Dispatch(Gesture);
+            };
         }
     }
 }
