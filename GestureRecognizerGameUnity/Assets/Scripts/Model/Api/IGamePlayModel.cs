@@ -24,5 +24,6 @@ namespace Model.Api
         HandledProperty<TimeSpan> Time { get; }
         HandledProperty<TimeSpan> InitCooldownTime { get; }
         HandledProperty<Vector2[]> Template { get; }
+        HandledProperty<float> CurrentCooldown { get; }
     }
 }

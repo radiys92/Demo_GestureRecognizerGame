@@ -40,7 +40,7 @@ namespace UIView.Windows
 
         public TimeSpan Time
         {
-            set { TimeTxt.text = $"{(int) value.TotalMinutes}:{value.Seconds}"; }
+            set { TimeTxt.text = $"{value.Seconds}.{value.Milliseconds.ToString("000")}"; }
         }
 
 //        public int Stage

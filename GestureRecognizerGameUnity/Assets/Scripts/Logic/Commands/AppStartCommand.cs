@@ -14,10 +14,10 @@ namespace Logic.Commands
         public override void Execute()
         {
             Debug.Log("App started!");
-            ChangeGameFlowStateSignal.Dispatch(GameStates.MainMenu);
+//            ChangeGameFlowStateSignal.Dispatch(GameStates.MainMenu);
 
 //            injectionBinder.GetInstance<IGamePlayModel>().Stage.Value = 1;
-//            injectionBinder.GetInstance<ChangeGamePlayStateSignal>().Dispatch(GamePlayState.StageStarting);
+            injectionBinder.GetInstance<ChangeGamePlayStateSignal>().Dispatch(GamePlayState.Init);
         }
     }
 }

@@ -32,6 +32,8 @@ namespace Logic.Commands
         [Inject]
         public ChangeGamePlayStateSignal ChangeGamePlayStateSignal { get; private set; }
 
+        private IEnumerator _gestureInputWaiter = null;
+
         public override void Execute()
         {
             if (GameFlow.GameState.Value != GameStates.GamePlay)
@@ -44,10 +46,10 @@ namespace Logic.Commands
             switch (State)
             {
                 case GamePlayState.None:
-                    GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(-1);
-//                    GamePlay.Stage.Value = -1;
+                    WipeSessionData();
                     break;
                 case GamePlayState.Init:
+                    WipeSessionData();
                     CoroutineWorker.StartCoroutine(InitCoroutine());
                     break;
 //                case GamePlayState.StageStarting:
@@ -61,16 +63,55 @@ namespace Logic.Commands
                     CoroutineWorker.StartCoroutine(DrawTemplateGestureState(template));
                     break;
                 case GamePlayState.UserGestureInput:
+                    StartGestureWaiter();
                     break;
-                case GamePlayState.GesturesCompare:
-                    break;
+//                case GamePlayState.GesturesCompare:
+//                    break;
                 case GamePlayState.Pause:
                     break;
                 case GamePlayState.GameOver:
+                    WipeSessionData();
+                    ChangeGameFlowStateSignal.Dispatch(GameStates.GameOver);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void WipeSessionData()
+        {
+            GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(-1);
+            GamePlay.Score.Value = 0;
+            GamePlay.Time.Value = TimeSpan.FromSeconds(0);
+            GamePlay.CurrentCooldown.Value = 5;
+            //                    GamePlay.Stage.Value = -1;
+        }
+
+        private void StartGestureWaiter()
+        {
+            StopGestureWaiter();
+            _gestureInputWaiter = UserGestureInputStage();
+            CoroutineWorker.StartCoroutine(_gestureInputWaiter);
+        }
+
+        private void StopGestureWaiter()
+        {
+            if (_gestureInputWaiter != null)
+            {
+                CoroutineWorker.StopCoroutine(_gestureInputWaiter);
+                _gestureInputWaiter = null;
+            }
+        }
+
+        private IEnumerator UserGestureInputStage()
+        {
+            var startTime = Time.time;
+            for (var delta = 0f; delta < GamePlay.CurrentCooldown.Value; delta = Time.time - startTime)
+            {
+                GamePlay.Time.Value = TimeSpan.FromSeconds(GamePlay.CurrentCooldown.Value - delta);
+                yield return new WaitForEndOfFrame();
+            }
+            ChangeGamePlayStateSignal.Dispatch(GamePlayState.GameOver);
         }
 
         private IEnumerator DrawTemplateGestureState(Vector2[] template)
