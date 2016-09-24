@@ -53,6 +53,7 @@ namespace Logic.Commands
                     WipeSessionData();
                     break;
                 case GamePlayState.Init:
+                    StopGestureWaiter();
                     WipeSessionData();
                     CoroutineWorker.StartCoroutine(InitCoroutine());
                     break;
@@ -120,14 +121,18 @@ namespace Logic.Commands
                 GamePlay.Time.Value = TimeSpan.FromSeconds(GamePlay.CurrentCooldown.Value - delta);
                 yield return new WaitForEndOfFrame();
             }
-            ChangeGamePlayStateSignal.Dispatch(GamePlayState.GameOver);
+            if (GamePlay.State.Value == GamePlayState.UserGestureInput)
+            {
+                ChangeGamePlayStateSignal.Dispatch(GamePlayState.GameOver);
+            }
         }
 
         private IEnumerator DrawTemplateGestureState(Vector2[] template)
         {
             GamePlay.Template.Value = template;
             yield return new WaitForSeconds(2);
-            ChangeGamePlayStateSignal.Dispatch(GamePlayState.UserGestureInput);
+            if (GamePlay.State.Value == GamePlayState.ShowTemplateGesture)
+                ChangeGamePlayStateSignal.Dispatch(GamePlayState.UserGestureInput);
         }
 
         private Vector2[] GetRandomTemplate()
@@ -154,7 +159,8 @@ namespace Logic.Commands
             }
             GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(-1);
             //            ChangeGamePlayStateSignal.Dispatch(GamePlayState.StageStarting);
-            ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
+            if (GamePlay.State.Value == GamePlayState.Init)
+                ChangeGamePlayStateSignal.Dispatch(GamePlayState.ShowTemplateGesture);
         }
     }
 }
