@@ -92,8 +92,7 @@ namespace Logic.Commands
             GamePlay.InitCooldownTime.Value = TimeSpan.FromSeconds(0);
             GamePlay.Score.Value = 0;
             GamePlay.Time.Value = TimeSpan.FromSeconds(0);
-            GamePlay.CurrentCooldown.Value = 10;
-//            GamePlay.CurrentCooldown.Value = 99999999;
+            GamePlay.CurrentCooldown.Value = 20;
             //                    GamePlay.Stage.Value = -1;
         }
 
