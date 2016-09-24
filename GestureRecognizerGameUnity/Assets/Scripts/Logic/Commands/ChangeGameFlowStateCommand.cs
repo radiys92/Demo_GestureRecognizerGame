@@ -20,6 +20,19 @@ namespace Logic.Commands
         public override void Execute()
         {
             Debug.LogFormat("Changing game state to {0}",State);
+
+            if (GameFlow.GameState.Value != State)
+            {
+                if (GameFlow.GameState.Value != GameStates.Pause && State == GameStates.Pause)
+                {
+                    Time.timeScale = 0;
+                }
+                if (GameFlow.GameState.Value == GameStates.Pause && State != GameStates.Pause)
+                {
+                    Time.timeScale = 1;
+                }
+            }
+
             GameFlow.GameState.Value = State;
 
             if (State == GameStates.MainMenu)
