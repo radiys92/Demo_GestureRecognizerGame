@@ -1,3 +1,4 @@
+using Helpers.Api;
 using Model.Api;
 using strange.extensions.command.impl;
 using UnityEngine;
@@ -9,13 +10,12 @@ namespace Logic.Commands
         [Inject]
         public IGameFlowModel GameFlow { get; private set; }
 
+        [Inject]
+        public ILineDrawer LineDrawer { get; private set; }
+
         public override void Execute()
         {
-            foreach (var lineRenderer in GameFlow.LineRenderers)
-            {
-                Object.Destroy(lineRenderer.gameObject);
-            }
-            GameFlow.LineRenderers.Clear();
+            LineDrawer.DestroyLine();
         }
     }
 }

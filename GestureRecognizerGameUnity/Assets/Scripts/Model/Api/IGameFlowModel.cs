@@ -12,6 +12,5 @@ namespace Model.Api
         HandledProperty<Gesture> FirstGesture { get; }
         HandledProperty<Gesture> SecondGesture { get; }
         HandledProperty<float> ComparsionScore { get; }
-        List<LineRenderer> LineRenderers { get;}
     }
 }

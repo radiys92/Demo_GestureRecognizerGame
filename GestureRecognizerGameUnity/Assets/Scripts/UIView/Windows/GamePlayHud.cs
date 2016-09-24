@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using Helpers;
+using Helpers.Api;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,8 +17,10 @@ namespace UIView.Windows
         public Text StageTxt;
         public Text InitCounterTxt;
         public RectTransform GestureRendererRect;
-        public LineRenderer GestureRenderer;
         public Canvas MyCanvas;
+
+        [Inject]
+        public ILineDrawer LineDrawer { get; private set; }
 
         public UnityEvent OnPauseBtnClick => PauseBtn.onClick;
 
@@ -42,7 +45,7 @@ namespace UIView.Windows
 
         public TimeSpan Time
         {
-            set { TimeTxt.text = $"{value.Seconds}.{value.Milliseconds.ToString("000")}"; }
+            set { TimeTxt.text = $"{(int)(value.TotalSeconds)}.{value.Milliseconds.ToString("000")}"; }
         }
 
 //        public int Stage
@@ -86,22 +89,22 @@ namespace UIView.Windows
 
         private IEnumerator DrawPoints(Vector3[] points, int drawTime, int hideTime)
         {
+            LineDrawer.CreateLine(LineType.AiLine);
             var startTime = UnityEngine.Time.time;
             for (var drawDelta = 0f; drawDelta < drawTime; drawDelta = UnityEngine.Time.time - startTime)
             {
                 var neededPointsCount = (int) ((drawDelta/drawTime)*points.Length);
-                SetPoints(GestureRenderer, points, 0, neededPointsCount);
+                SetPoints(points, 0, neededPointsCount);
                 yield return new WaitForEndOfFrame();
             }
-            SetPoints(GestureRenderer, points, 0, points.Length);
+            SetPoints(points, 0, points.Length);
             yield return new WaitForSeconds(hideTime);
-            GestureRenderer.SetVertexCount(0);
+            LineDrawer.DestroyLine();
         }
 
-        private static void SetPoints(LineRenderer lineRenderer, Vector3[] points, int start, int count)
+        private void SetPoints(Vector3[] points, int start, int count)
         {
-            lineRenderer.SetVertexCount(count);
-            lineRenderer.SetPositions(points.Skip(start).Take(count).ToArray());
+            LineDrawer.UpdateLinePoints(points.Skip(start).Take(count).ToArray());
         }
 
         private void BlinkText(string text)

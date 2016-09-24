@@ -12,7 +12,6 @@ namespace Model.Impl
         public HandledProperty<Gesture> FirstGesture { get; } = new HandledProperty<Gesture>();
         public HandledProperty<Gesture> SecondGesture { get; } = new HandledProperty<Gesture>();
         public HandledProperty<float> ComparsionScore { get; } = new HandledProperty<float>();
-        public List<LineRenderer> LineRenderers { get; } = new List<LineRenderer>();
     }
 
     public enum GameStates

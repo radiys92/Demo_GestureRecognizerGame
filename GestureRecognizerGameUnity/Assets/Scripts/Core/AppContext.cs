@@ -32,6 +32,7 @@ namespace Core
             // helpers
             injectionBinder.Bind<ICoroutineWorker>().To(GetCoroutiner()).ToSingleton();
             injectionBinder.Bind<IGestureRecognizer>().To<GestureRecognizer>().ToSingleton();
+            injectionBinder.Bind<ILineDrawer>().To(Object.FindObjectOfType<LineDrawer>()).ToSingleton();
 
             // model layer
             injectionBinder.Bind<IGestureInput>().To<GestureInputContext>().ToSingleton();
