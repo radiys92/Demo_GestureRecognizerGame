@@ -32,7 +32,9 @@ namespace Helpers.Impl
             p1 = NormalizePoints(p1, maxPoints);
             p2 = NormalizePoints(p2, maxPoints);
 
-            return GestureMatch(p1, p2);
+            return p1.Count != p2.Count
+                ? 0
+                : GestureMatch(p1, p2);
         }
 
         private List<Vector2> NormalizePoints(List<Vector2> points, int maxPoints)
