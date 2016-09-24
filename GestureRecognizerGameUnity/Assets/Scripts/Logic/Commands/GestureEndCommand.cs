@@ -32,6 +32,11 @@ namespace Logic.Commands
 
         public override void Execute()
         {
+            if (GamePlay.CurrentGestureId != Gesture.ID)
+                return;
+
+            GamePlay.CurrentGestureId = -1;
+
             GestureRendererClearSignal.Dispatch();
 
             if (GamePlay.State.Value != GamePlayState.UserGestureInput)

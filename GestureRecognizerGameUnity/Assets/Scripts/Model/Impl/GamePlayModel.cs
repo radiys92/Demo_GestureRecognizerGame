@@ -15,5 +15,6 @@ namespace Model.Impl
         public HandledProperty<Vector2[]> Template { get; } = new HandledProperty<Vector2[]>(null);
         public HandledProperty<float> CurrentCooldown { get; } = new HandledProperty<float>(-1);
         public HandledProperty<int> Fails { get; } = new HandledProperty<int>(0);
+        public int CurrentGestureId { get; set; } = -1;
     }
 }

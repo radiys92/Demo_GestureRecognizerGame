@@ -27,6 +27,11 @@ namespace Logic.Commands
 
         public override void Execute()
         {
+            if (GamePlay.CurrentGestureId != -1)
+                return;
+
+            GamePlay.CurrentGestureId = Gesture.ID;
+
             if (GamePlay.State.Value != GamePlayState.UserGestureInput)
                 return;
 

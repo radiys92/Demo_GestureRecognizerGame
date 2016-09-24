@@ -26,5 +26,6 @@ namespace Model.Api
         HandledProperty<Vector2[]> Template { get; }
         HandledProperty<float> CurrentCooldown { get; }
         HandledProperty<int> Fails { get;}
+        int CurrentGestureId { get; set; }
     }
 }
