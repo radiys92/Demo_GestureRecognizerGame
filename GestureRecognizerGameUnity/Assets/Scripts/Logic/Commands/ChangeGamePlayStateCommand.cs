@@ -63,6 +63,7 @@ namespace Logic.Commands
 //                    CoroutineWorker.StartCoroutine(StartStage(stage));
 //                    break;
                 case GamePlayState.ShowTemplateGesture:
+                    GamePlay.Time.Value = TimeSpan.FromSeconds(GamePlay.CurrentCooldown.Value);
                     StopGestureWaiter();
                     var template = GetRandomTemplate();
                     CoroutineWorker.StartCoroutine(DrawTemplateGestureState(template));
