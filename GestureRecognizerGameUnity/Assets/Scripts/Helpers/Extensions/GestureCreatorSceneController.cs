@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GCon;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -10,6 +12,8 @@ namespace Helpers.Extensions
 {
     public class GestureCreatorSceneController : MonoBehaviour
     {
+
+#if UNITY_EDITOR
         /// <summary>
         /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
         /// this hastily written code, look at it as a prototype !!!!!!!!!!!!!!!
@@ -205,5 +209,6 @@ namespace Helpers.Extensions
                 _lr.SetPosition(i, pos);
             }
         }
+#endif
     }
 }
